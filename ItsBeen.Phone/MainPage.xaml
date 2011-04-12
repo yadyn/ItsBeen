@@ -1,0 +1,42 @@
+﻿<phone:PhoneApplicationPage 
+	x:Class="ItsBeen.Phone.MainPage"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+	xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+	xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+	xmlns:views="clr-namespace:ItsBeen.Phone.Views"
+	mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
+	FontFamily="{StaticResource PhoneFontFamilyNormal}"
+	FontSize="{StaticResource PhoneFontSizeNormal}"
+	Foreground="{StaticResource PhoneForegroundBrush}"
+	SupportedOrientations="Portrait"  Orientation="Portrait"
+	shell:SystemTray.IsVisible="True"
+	DataContext="{Binding Main, Source={StaticResource Locator}}">
+	<Grid x:Name="LayoutRoot" Background="Transparent">
+		<controls:Pivot x:Name="PivotMenu" Title="{Binding PageTitle, Mode=OneWay}" SelectionChanged="PivotMenu_SelectionChanged">
+			<controls:PivotItem Header="{Binding Page1Name, Mode=OneWay}">
+				<views:AllListView/>
+			</controls:PivotItem>
+			<controls:PivotItem Header="{Binding Page2Name, Mode=OneWay}">
+				<views:RecentListView/>
+			</controls:PivotItem>
+			<controls:PivotItem Header="Categorized">
+				<views:CategoryListView/>
+			</controls:PivotItem>
+		</controls:Pivot>
+	</Grid>
+	<phone:PhoneApplicationPage.ApplicationBar>
+		<shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+			<shell:ApplicationBar.MenuItems>
+				<shell:ApplicationBarMenuItem x:Name="menuResetAll" Text="Reset All Timers" Click="menuResetAll_Click"/>
+			</shell:ApplicationBar.MenuItems>
+			<shell:ApplicationBarIconButton x:Name="buttonAdd" IconUri="/icons/appbar.new.rest.png" Text="Add" Click="buttonAdd_Click"/>
+			<shell:ApplicationBarIconButton x:Name="buttonEdit" IconUri="/icons/appbar.edit.rest.png" Text="Edit" Click="buttonEdit_Click" IsEnabled="False"/>
+			<shell:ApplicationBarIconButton x:Name="buttonReset" IconUri="/icons/appbar.refresh.rest.png" Text="Reset" Click="buttonReset_Click" IsEnabled="False"/>
+			<shell:ApplicationBarIconButton x:Name="buttonDelete" IconUri="/icons/appbar.delete.rest.png" Text="Delete" Click="buttonDelete_Click" IsEnabled="False"/>
+		</shell:ApplicationBar>
+	</phone:PhoneApplicationPage.ApplicationBar>
+</phone:PhoneApplicationPage>

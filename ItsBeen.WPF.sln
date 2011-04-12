@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItsBeen.Client", "ItsBeen.Client\ItsBeen.Client.csproj", "{81A6EED7-FEF1-4A74-B0C7-8D7075C41EAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItsBeen.App", "ItsBeen.App\ItsBeen.App.csproj", "{534F5342-1D7C-461E-AC6C-4C15EA83F2A2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{81A6EED7-FEF1-4A74-B0C7-8D7075C41EAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81A6EED7-FEF1-4A74-B0C7-8D7075C41EAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81A6EED7-FEF1-4A74-B0C7-8D7075C41EAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81A6EED7-FEF1-4A74-B0C7-8D7075C41EAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{534F5342-1D7C-461E-AC6C-4C15EA83F2A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{534F5342-1D7C-461E-AC6C-4C15EA83F2A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{534F5342-1D7C-461E-AC6C-4C15EA83F2A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{534F5342-1D7C-461E-AC6C-4C15EA83F2A2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
