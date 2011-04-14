@@ -146,7 +146,7 @@
     <SolidColorBrush x:Key="WhiteColorBrush" Color="{StaticResource WhiteColor}" />
     <SolidColorBrush x:Key="BlackColorBrush" Color="{StaticResource BlackColor}" />
 
-    <SolidColorBrush x:Key="HighlightBrush" Color="{StaticResource HighlightDarkColor}" />
+	<SolidColorBrush x:Key="HighlightBrush" Color="{StaticResource HighlightDarkColor}" />
     <SolidColorBrush x:Key="HighlightLightBrush" Color="{StaticResource HighlightLightColor}" />
     <SolidColorBrush x:Key="NavigationBorderBrush" Color="#FF9D9492" />
     <SolidColorBrush x:Key="NavigationForegroundBrush" Color="{StaticResource BlackColor}"/>

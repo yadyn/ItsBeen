@@ -1579,10 +1579,10 @@
 					<ControlTemplate.Triggers>
 						<Trigger Property="IsSelected" Value="True">
 							<Setter Property="Panel.ZIndex" Value="1"/>
-							<Setter Property="FontWeight" Value="Bold"/>
+							<Setter Property="TextElement.FontWeight" TargetName="Content" Value="Bold"/>
 						</Trigger>
 						<Trigger Property="IsSelected" Value="False">
-							<Setter Property="Foreground" Value="{StaticResource CheckBoxBrush}"/>
+							<Setter Property="TextElement.Foreground" TargetName="Content" Value="{StaticResource CheckBoxBrush}"/>
 						</Trigger>
 						<MultiTrigger>
 							<MultiTrigger.Conditions>

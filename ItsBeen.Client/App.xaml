@@ -11,12 +11,11 @@
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="/Skins/Brushes.xaml" />
-				<ResourceDictionary Source="/Skins/CoreStyles.xaml" />
 				<ResourceDictionary Source="/Skins/Fonts.xaml" />
-				<ResourceDictionary Source="/Skins/MainSkin.xaml" />
+				<ResourceDictionary Source="/Skins/CoreStyles.xaml" />
 				<ResourceDictionary Source="/Skins/SDKStyles.xaml" />
 				<ResourceDictionary Source="/Skins/Styles.xaml" />
-				<ResourceDictionary Source="Skins/Styles.xaml"/>
+				<ResourceDictionary Source="/Skins/MainSkin.xaml" />
 			</ResourceDictionary.MergedDictionaries>
 			
 			<!--Global View Model Locator-->
