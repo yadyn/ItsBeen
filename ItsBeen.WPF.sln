@@ -5,6 +5,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItsBeen.Client", "ItsBeen.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItsBeen.App", "ItsBeen.App\ItsBeen.App.csproj", "{534F5342-1D7C-461E-AC6C-4C15EA83F2A2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AB0BFA92-BFC3-4B6E-A067-CD8889B83C11}"
+	ProjectSection(SolutionItems) = preProject
+		license.txt = license.txt
+		readme.markdown = readme.markdown
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
