@@ -36,13 +36,6 @@ namespace ItsBeen.App.ViewModels
 			RegisterForMessages();
 		}
 
-		public string PageTitle
-		{
-			get
-			{
-				return AppViewModel.ApplicationName;
-			}
-		}
 		public string PageName
 		{
 			get

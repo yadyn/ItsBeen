@@ -8,15 +8,14 @@
 	xmlns:gcmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WPF4"
 	mc:Ignorable="d"
 	x:Class="ItsBeen.Client.Views.AllListView"
-	x:Name="UserControl"
 	d:DesignWidth="400"
-	d:DataContext="{d:DesignData Source=../DesignData/DesignerListView.xaml}">
+	d:DataContext="{d:DesignData Source=../DesignData/DesignerListViewModel.xaml}">
 
 	<Grid x:Name="LayoutRoot">
 		<ListBox x:Name="ItemsList" ItemsSource="{Binding Items}" Background="{x:Null}">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
-					<views:ItemView DataContext="{Binding}" />
+					<views:ItemView/>
 				</DataTemplate>
 			</ListBox.ItemTemplate>
 			<i11y:Interaction.Triggers>

@@ -2,9 +2,6 @@
 using System.Linq;
 using System.Collections.Generic;
 
-using GalaSoft.MvvmLight.Messaging;
-
-using ItsBeen.App.Messaging;
 using ItsBeen.App.Model;
 
 namespace ItsBeen.App.Services
@@ -16,7 +13,7 @@ namespace ItsBeen.App.Services
 	/// This item service does not provide any persistence between runs.
 	/// It is mostly useful for testing against.
 	/// </remarks>
-	public class InMemoryItemService : ServiceBase, IItemService
+	public class InMemoryItemService : IItemService
 	{
 		int i = 0;
 		private List<ItemModel> items;
@@ -27,24 +24,18 @@ namespace ItsBeen.App.Services
 		public InMemoryItemService()
 		{
 			Initialize();
-			RegisterForMessages();
 		}
 
-		public IEnumerable<ItemModel> Items
+		public IEnumerable<ItemModel> GetItems()
 		{
-			get { return items.AsReadOnly(); }
+			return items.AsReadOnly();
 		}
-
 		public void AddItem(ItemModel item)
 		{
 			if (item == null)
 				return;
 
 			items.Add(item);
-
-			OnPropertyChanged(new System.ComponentModel.PropertyChangedEventArgs("Items"));
-
-			Messenger.Default.Send(new NotificationMessage<ItemModel>(this, item, Notifications.NotifyItemAdded));
 		}
 		public void DeleteItem(ItemModel item)
 		{
@@ -52,12 +43,11 @@ namespace ItsBeen.App.Services
 				return;
 
 			items.Remove(item);
-
-			OnPropertyChanged(new System.ComponentModel.PropertyChangedEventArgs("Items"));
-
-			Messenger.Default.Send(new NotificationMessage<ItemModel>(this, item, Notifications.NotifyItemDeleted));
 		}
-
+		public void SaveItems()
+		{
+			// do nothing, items are in memory only
+		}
 		public ItemModel NewItem()
 		{
 			return new ItemModel(String.Format("New Timer {0}", ++i));
@@ -80,41 +70,6 @@ namespace ItsBeen.App.Services
 			item = NewItem();
 			item.LastUpdated = DateTime.Now.Add(new TimeSpan(0, 0, 3, 8, 233));
 			items.Add(item);
-		}
-		private void RegisterForMessages()
-		{
-			Messenger.Default.Register<NotificationMessage>(this,
-				message =>
-				{
-					if (message.Notification == Commands.AddItem)
-					{
-						AddItem(NewItem());
-					}
-					else if (message.Notification == Notifications.NotifyResetAll)
-					{
-						// do nothing; no persistence
-					}
-				});
-			Messenger.Default.Register<NotificationMessage<ItemModel>>(this,
-				message =>
-				{
-					if (message.Notification == Notifications.NotifyItemReset)
-					{
-						// do nothing; no persistence
-					}
-					else if (message.Notification == Notifications.NotifyItemSaved)
-					{
-						ItemModel oldItem = items.Where(i => i.ID == message.Content.ID).FirstOrDefault();
-						if (oldItem != null)
-						{
-							items[items.IndexOf(oldItem)] = message.Content;
-						}
-					}
-					else if (message.Notification == Commands.DeleteItem)
-					{
-						DeleteItem(message.Content);
-					}
-				});
 		}
 	}
 }

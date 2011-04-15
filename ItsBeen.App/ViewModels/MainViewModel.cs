@@ -23,50 +23,72 @@ namespace ItsBeen.App.ViewModels
 	/// </remarks>
 	public class MainViewModel : AppViewModel
 	{
-		private static readonly string IsItemSelectedPropertyName = "IsItemSelected";
+		private readonly IMessageBoxService _messageBoxService;
+		private readonly IItemService _itemService;
+		private readonly ObservableCollection<ListViewModel> _listViewModels;
 
-		private bool isItemSelected;
-		private object itemSelectedKey;
+		private ListViewModel _commandContext;
 
-		private ICommand commandAdd;
-		private ICommand commandEdit;
-		private ICommand commandReset;
-		private ICommand commandResetAll;
-		private ICommand commandDelete;
+		private ICommand _commandAdd;
+		private ICommand _commandEdit;
+		private ICommand _commandReset;
+		private ICommand _commandResetAll;
+		private ICommand _commandDelete;
 
-		public string PageTitle
+		/// <summary>
+		/// Initializes a new instance of the MainViewModel class.
+		/// </summary>
+		/// <param name="messageBoxService">A message box service.</param>
+		/// <param name="itemService">An item service.</param>
+		public MainViewModel(IMessageBoxService messageBoxService, IItemService itemService)
+		{
+			if (messageBoxService == null)
+				throw new ArgumentNullException("messageBoxService");
+			if (itemService == null)
+				throw new ArgumentNullException("itemService");
+
+			_messageBoxService = messageBoxService;
+			_itemService = itemService;
+
+			_listViewModels = new ObservableCollection<ListViewModel>();
+			_listViewModels.Add(new ListViewModel(_itemService));
+			_listViewModels.Add(new ListViewModel(_itemService));
+			_listViewModels.Add(new ListViewModel(_itemService));
+
+			_commandContext = _listViewModels[0];
+
+			RegisterForMessages();
+		}
+
+		private ListViewModel CommandContext
 		{
 			get
 			{
-				return AppViewModel.ApplicationName;
+				return _commandContext;
 			}
-		}
-		public string Page1Name
-		{
-			get
+			set
 			{
-				return "All";
+				_commandContext = value;
+
+				RaisePropertyChanged("IsItemSelected");
+				RaiseCanExecuteChanged(CommandEdit);
+				RaiseCanExecuteChanged(CommandReset);
+				RaiseCanExecuteChanged(CommandDelete);
 			}
 		}
-		public string Page2Name
-		{
-			get
-			{
-				return "Recent";
-			}
-		}
+
 		public bool IsItemSelected
 		{
 			get
 			{
-				return isItemSelected;
+				return false;
 			}
 		}
-		public object ItemSelectedKey
+		public ObservableCollection<ListViewModel> ListViewModels
 		{
 			get
 			{
-				return itemSelectedKey;
+				return _listViewModels;
 			}
 		}
 
@@ -74,100 +96,148 @@ namespace ItsBeen.App.ViewModels
 		{
 			get
 			{
-				if (commandAdd == null)
+				if (_commandAdd == null)
 				{
-					commandAdd = new RelayCommand(() =>
+					_commandAdd = new RelayCommand(() =>
 					{
-						Messenger.Default.Send(new NotificationMessage(this, Commands.AddItem));
+						var item = _itemService.NewItem();
+						_itemService.AddItem(item);
+						Messenger.Default.Send(new NotificationMessage<ItemModel>(this, item, Notifications.NotifyItemAdded));
 					});
 				}
-				return commandAdd;
+				return _commandAdd;
 			}
 		}
 		public ICommand CommandEdit
 		{
 			get
 			{
-				if (commandEdit == null)
+				if (_commandEdit == null)
 				{
-					commandEdit = new RelayCommand(() =>
+					_commandEdit = new RelayCommand(() =>
 					{
-						Messenger.Default.Send(new NotificationMessage(this, itemSelectedKey, Commands.EditItem));
-					});
+						// TODO
+						//Messenger.Default.Send(new NotificationMessage(this, CommandContext.SelectedItem.Item, Commands.EditItem));
+					}, () => IsItemSelected);
 				}
-				return commandEdit;
+				return _commandEdit;
 			}
 		}
 		public ICommand CommandReset
 		{
 			get
 			{
-				if (commandReset == null)
+				if (_commandReset == null)
 				{
-					commandReset = new RelayCommand(() =>
+					_commandReset = new RelayCommand(() =>
 					{
-						Messenger.Default.Send(new NotificationMessage(this, itemSelectedKey, Commands.ResetItem));
-					});
+						CommandContext.SelectedItem.Reset();
+						_itemService.SaveItems();
+						Messenger.Default.Send(new NotificationMessage<ItemModel>(this, CommandContext.SelectedItem.Item, Notifications.NotifyItemReset));
+					}, () => IsItemSelected);
 				}
-				return commandReset;
+				return _commandReset;
 			}
 		}
 		public ICommand CommandResetAll
 		{
 			get
 			{
-				if (commandResetAll == null)
+				if (_commandResetAll == null)
 				{
-					commandResetAll = new RelayCommand(() =>
+					_commandResetAll = new RelayCommand(() =>
 					{
-						Messenger.Default.Send(new NotificationMessage(this, Commands.ResetAll));
+						DialogMessage message = new DialogMessage(this, Properties.Resources.ConfirmResetAllContent, result =>
+						{
+							if (result == System.Windows.MessageBoxResult.OK || result == System.Windows.MessageBoxResult.Yes)
+							{
+								CommandContext.Items.ToList().ForEach(ivm => ivm.Reset());
+								_itemService.SaveItems();
+								Messenger.Default.Send(new NotificationMessage(this, Notifications.NotifyResetAll));
+							}
+						});
+						message.Caption = Properties.Resources.ConfirmResetAllCaption;
+						_messageBoxService.ShowMessageBox(message);
+#if WINDOWS_PHONE
+						message.Button = System.Windows.MessageBoxButton.OKCancel;
+#else
+						message.Button = System.Windows.MessageBoxButton.YesNo;
+						message.DefaultResult = System.Windows.MessageBoxResult.No;
+						message.Icon = System.Windows.MessageBoxImage.Question;
+#endif
 					});
 				}
-				return commandResetAll;
+				return _commandResetAll;
 			}
 		}
 		public ICommand CommandDelete
 		{
 			get
 			{
-				if (commandDelete == null)
+				if (_commandDelete == null)
 				{
-					commandDelete = new RelayCommand(() =>
+					_commandDelete = new RelayCommand(() =>
 					{
-						Messenger.Default.Send(new NotificationMessage(this, itemSelectedKey, Commands.DeleteItem));
-					});
+						DialogMessage message = new DialogMessage(this, Properties.Resources.ConfirmItemDeleteContent, result =>
+						{
+							if (result == System.Windows.MessageBoxResult.OK || result == System.Windows.MessageBoxResult.Yes)
+							{
+								_itemService.DeleteItem(CommandContext.SelectedItem.Item);
+								Messenger.Default.Send(new NotificationMessage<ItemModel>(this, CommandContext.SelectedItem.Item, Notifications.NotifyItemDeleted));
+							}
+						});
+						message.Caption = Properties.Resources.ConfirmItemDeleteCaption;
+#if WINDOWS_PHONE
+						message.Button = System.Windows.MessageBoxButton.OKCancel;
+#else
+						message.Button = System.Windows.MessageBoxButton.YesNo;
+						message.DefaultResult = System.Windows.MessageBoxResult.No;
+						message.Icon = System.Windows.MessageBoxImage.Question;
+#endif
+						_messageBoxService.ShowMessageBox(message);
+					}, () => IsItemSelected);
 				}
-				return commandDelete;
+				return _commandDelete;
 			}
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the MainViewModel class.
-		/// </summary>
-		public MainViewModel()
-		{
-			RegisterForMessages();
-		}
-
-		///// <summary>
-		///// Unregisters this instance from the Messenger class and cleans up
-		///// other resources.
-		///// </summary>
-		//public override void Cleanup()
-		//{
-		//    base.Cleanup();
-		//}
-
 		private void RegisterForMessages()
 		{
-			Messenger.Default.Register<NotificationMessage<System.Windows.Controls.SelectionChangedEventArgs>>(this,
+			Messenger.Default.Register<NotificationMessage>(this,
 				message =>
 				{
-					if (message.Notification == Commands.SelectItem)
+					if (message.Notification == Commands.AddItem)
 					{
-						isItemSelected = (message.Content.AddedItems.Count > 0);
-						itemSelectedKey = message.Sender;
-						RaisePropertyChanged(IsItemSelectedPropertyName);
+						if (CommandAdd.CanExecute(null))
+							CommandAdd.Execute(null);
+					}
+					else if (message.Notification == Commands.EditItem)
+					{
+						if (CommandEdit.CanExecute(null))
+							CommandEdit.Execute(null);
+					}
+					if (message.Notification == Commands.ResetItem)
+					{
+						if (CommandReset.CanExecute(null))
+							CommandReset.Execute(null);
+					}
+					else if (message.Notification == Commands.DeleteItem)
+					{
+						if (CommandDelete.CanExecute(null))
+							CommandDelete.Execute(null);
+					}
+					else if (message.Notification == Commands.ResetAll)
+					{
+						if (CommandResetAll.CanExecute(null))
+							CommandResetAll.Execute(null);
+					}
+				});
+			Messenger.Default.Register<NotificationMessage<ItemModel>>(this,
+				message =>
+				{
+					if (message.Notification == Notifications.NotifyItemSelected)
+					{
+						CommandContext = message.Sender as ListViewModel;
 					}
 				});
 		}

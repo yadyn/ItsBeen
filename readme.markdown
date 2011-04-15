@@ -33,14 +33,15 @@ the MVVM pattern is that it easily allows this sharing of code.
 
 - Project created in Visual Studio 2010
 - .NET 4.0 Client Profile / .NET for Windows Phone 7
-- Uses the [MVVM Light toolkit][2] by Laurent Bugnion
-- WPF client uses my [Cosmopolitan for WPF][3] theme
-- Licensed under [Creative Commons BY-NC-SA 3.0][4]
+- Uses the [MVVM Light][2] toolkit by Laurent Bugnion
+- WPF client uses my [Cosmopolitan for WPF][3] theme and [Task Dialog][4]
+- Licensed under [Creative Commons BY-NC-SA 3.0][5]
     - Must attribute
 	- Non-commercial
 	- Share-alike
 
 [1]: http://www.google.com/#hl=en&q=itzbeen
 [2]: http://mvvmlight.codeplex.com/
-[3]: https://github.com/yadyn/Cosmopolitan-Theme-for-WPF
-[4]: http://creativecommons.org/licenses/by-nc-sa/3.0/
+[3]: http://github.com/yadyn/Cosmopolitan-Theme-for-WPF
+[4]: http://www.codeproject.com/KB/WPF/WPFTaskDialogEmulator.aspx
+[5]: http://creativecommons.org/licenses/by-nc-sa/3.0/

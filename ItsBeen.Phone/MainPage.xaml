@@ -8,23 +8,25 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
 	xmlns:views="clr-namespace:ItsBeen.Phone.Views"
-	mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
+	mc:Ignorable="d"
+	d:DesignWidth="480" d:DesignHeight="696"
+	d:DataContext="{d:DesignData Source=DesignData/DesignerMainViewModel.xaml}"
+	DataContext="{Binding Main, Source={StaticResource Locator}}"
 	FontFamily="{StaticResource PhoneFontFamilyNormal}"
 	FontSize="{StaticResource PhoneFontSizeNormal}"
 	Foreground="{StaticResource PhoneForegroundBrush}"
 	SupportedOrientations="Portrait"  Orientation="Portrait"
-	shell:SystemTray.IsVisible="True"
-	DataContext="{Binding Main, Source={StaticResource Locator}}">
+	shell:SystemTray.IsVisible="True">
 	<Grid x:Name="LayoutRoot" Background="Transparent">
-		<controls:Pivot x:Name="PivotMenu" Title="{Binding PageTitle, Mode=OneWay}" SelectionChanged="PivotMenu_SelectionChanged">
-			<controls:PivotItem Header="{Binding Page1Name, Mode=OneWay}">
-				<views:AllListView/>
+		<controls:Pivot x:Name="PivotMenu" Title="{Binding ApplicationName, Mode=OneWay}" SelectionChanged="PivotMenu_SelectionChanged">
+			<controls:PivotItem Header="All">
+				<views:AllListView DataContext="{Binding List, Source={StaticResource Locator}}" d:DataContext="{d:DesignData Source=DesignData/DesignerListViewModel.xaml}"/>
 			</controls:PivotItem>
-			<controls:PivotItem Header="{Binding Page2Name, Mode=OneWay}">
-				<views:RecentListView/>
+			<controls:PivotItem Header="Recent">
+				<views:RecentListView DataContext="{Binding List, Source={StaticResource Locator}}" d:DataContext="{d:DesignData Source=DesignData/DesignerListViewModel.xaml}"/>
 			</controls:PivotItem>
 			<controls:PivotItem Header="Categorized">
-				<views:CategoryListView/>
+				<views:CategoryListView DataContext="{Binding List, Source={StaticResource Locator}}" d:DataContext="{d:DesignData Source=DesignData/DesignerListViewModel.xaml}"/>
 			</controls:PivotItem>
 		</controls:Pivot>
 	</Grid>

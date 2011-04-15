@@ -20,13 +20,59 @@ namespace ItsBeen.App.ViewModels
 	{
 		private static readonly string ItemsPropertyName = "Items";
 
-		private IItemService itemService;
+		private readonly IItemService _itemService;
+
 		private ObservableCollection<ItemViewModel> items;
 		private System.Windows.Threading.DispatcherTimer ticker;
-		private ItemModel selectedItem;
+		private ItemViewModel _selectedItem;
 
 		private ICommand commandSelect;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ListViewModel"/> class.
+		/// </summary>
+		/// <param name="itemService">An item service.</param>
+		public ListViewModel(IItemService itemService)
+		{
+			if (itemService == null)
+				throw new ArgumentNullException("itemService");
+
+			this._itemService = itemService;
+
+			// Must initialize ticker BEFORE building item collection!
+			ticker = new System.Windows.Threading.DispatcherTimer();
+			ticker.Interval = new TimeSpan(TimeSpan.TicksPerSecond); // 1 second interval
+			ticker.Tick += ItemViewModel.HandleTick; // register to static handler
+
+			BuildItemsCollection();
+
+			RegisterForMessages();
+
+			if (!IsInDesignMode)
+				ticker.Start();
+		}
+
+		public bool IsItemSelected
+		{
+			get
+			{
+				return _selectedItem != null;
+			}
+		}
+		public ItemViewModel SelectedItem
+		{
+			get
+			{
+				return _selectedItem;
+			}
+			private set
+			{
+				_selectedItem = value;
+
+				RaisePropertyChanged("SelectedItem");
+				RaisePropertyChanged("IsItemSelected");
+			}
+		}
 		public ObservableCollection<ItemViewModel> Items
 		{
 			get
@@ -47,60 +93,25 @@ namespace ItsBeen.App.ViewModels
 				{
 					commandSelect = new RelayCommand<System.Windows.Controls.SelectionChangedEventArgs>(e =>
 					{
-						selectedItem = (e.AddedItems.Count > 0) ? (e.AddedItems[0] as ItemViewModel).Item : null;
-						Messenger.Default.Send(new NotificationMessage<System.Windows.Controls.SelectionChangedEventArgs>(this, e, Commands.SelectItem));
+						SelectedItem = (e.AddedItems.Count > 0) ? (e.AddedItems[0] as ItemViewModel) : null;
+						Messenger.Default.Send(new NotificationMessage<ItemModel>(this, SelectedItem.Item, Notifications.NotifyItemSelected));
 					});
 				}
 				return commandSelect;
 			}
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="ListViewModel"/> class.
-		/// </summary>
-		public ListViewModel()
-		{
-			if (IsInDesignMode)
-			{
-				itemService = new InMemoryItemService();
-			}
-			else
-			{
-				itemService = new IsolatedStorageItemService();
-			}
-
-			// Must initialize ticker BEFORE building item collection!
-			ticker = new System.Windows.Threading.DispatcherTimer();
-			ticker.Interval = new TimeSpan(TimeSpan.TicksPerSecond); // 1 second interval
-			ticker.Tick += ItemViewModel.HandleTick; // register to static handler
-
-			BuildItemsCollection();
-
-			this.itemService.PropertyChanged += (s, e) =>
-			{
-				if (e.PropertyName == ItemsPropertyName)
-				{
-					RaisePropertyChanged(ItemsPropertyName);
-				}
-			};
-
-			RegisterForMessages();
-
-			if (!IsInDesignMode)
-				ticker.Start();
-		}
-
 		private void BuildItemsCollection()
 		{
-			ObservableCollection<ItemViewModel> newItems = new ObservableCollection<ItemViewModel>();
+			ObservableCollection<ItemViewModel> itemsCol = new ObservableCollection<ItemViewModel>();
 
-			foreach (ItemModel item in itemService.Items)
-			{
-				ItemViewModel newItem = new ItemViewModel(item);
-				newItems.Add(newItem);
-			}
+			_itemService.GetItems().ToList().ForEach(item =>
+				{
+					ItemViewModel itemVM = new ItemViewModel(item);
+					itemsCol.Add(itemVM);
+				});
 
-			items = newItems;
+			items = itemsCol;
 		}
 		[System.Diagnostics.CodeAnalysis.SuppressMessage(
 			"Microsoft.Reliability",
@@ -135,34 +146,10 @@ namespace ItsBeen.App.ViewModels
 							itemVM = null;
 						}
 					}
-				});
-			Messenger.Default.Register<NotificationMessage>(this,
-				message =>
-				{
-					if (message.Notification == Commands.ResetItem)
+					else if (message.Notification == Commands.SelectItem)
 					{
-						ItemViewModel itemVM = items.Where(i => i.Item.ID == selectedItem.ID).FirstOrDefault();
-						if (itemVM != null)
-						{
-							itemVM.Reset();
-							Messenger.Default.Send(new NotificationMessage<ItemModel>(this, itemVM.Item, Notifications.NotifyItemReset));
-						}
-					}
-					else if (message.Notification == Commands.DeleteItem)
-					{
-						Messenger.Default.Send(new NotificationMessage<ItemModel>(this, selectedItem, Commands.DeleteItem));
-					}
-					else if (message.Notification == Commands.EditItem)
-					{
-						Messenger.Default.Send(new NotificationMessage<ItemModel>(this, selectedItem, Commands.EditItem));
-					}
-					else if (message.Notification == Commands.ResetAll)
-					{
-						foreach (ItemViewModel itemVM in items)
-						{
-							itemVM.Reset();
-						}
-						Messenger.Default.Send(new NotificationMessage(this, Notifications.NotifyResetAll));
+						if (CommandSelect.CanExecute(null))
+							CommandSelect.Execute(null);
 					}
 				});
 		}
@@ -174,8 +161,6 @@ namespace ItsBeen.App.ViewModels
 		public override void Cleanup()
 		{
 			base.Cleanup();
-
-			selectedItem = null;
 
 			foreach (ItemViewModel item in items)
 			{

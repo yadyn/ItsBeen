@@ -22,7 +22,7 @@
     <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
     <XapFilename>ItsBeen.App.xap</XapFilename>
     <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
-    <SilverlightAppEntry>ItsBeen.App.App</SilverlightAppEntry>
+    <SilverlightAppEntry>ItsBeen.Phone.App</SilverlightAppEntry>
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
     <Utf8Output>true</Utf8Output>
@@ -51,11 +51,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GalaSoft.MvvmLight.Extras.WP7, Version=3.0.0.27837, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Assemblies\GalaSoft.MvvmLight.Extras.WP7.dll</HintPath>
+    <Reference Include="Funq">
+      <HintPath>..\Assemblies\WP7\Funq.dll</HintPath>
     </Reference>
-    <Reference Include="GalaSoft.MvvmLight.WP7, Version=3.0.0.27833, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Assemblies\GalaSoft.MvvmLight.WP7.dll</HintPath>
+    <Reference Include="GalaSoft.MvvmLight.Extras.WP7">
+      <HintPath>..\Assemblies\WP7\GalaSoft.MvvmLight.Extras.WP7.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.WP7">
+      <HintPath>..\Assemblies\WP7\GalaSoft.MvvmLight.WP7.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Expression.Interactions" />
     <Reference Include="Microsoft.Phone.Controls" />
@@ -80,13 +83,16 @@
     </Compile>
     <Compile Include="Behaviors\GeneralConverters.cs" />
     <Compile Include="Behaviors\TimeSinceConverter.cs" />
+    <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controls\ExtensionMethods.cs" />
     <Compile Include="Controls\FluidListBox.cs" />
     <Compile Include="Controls\PickerBoxDialog.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PhoneFunqlet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\MessageBoxService.cs" />
     <Compile Include="TiltEffect.cs" />
     <Compile Include="Views\CategoryListView.xaml.cs">
       <DependentUpon>CategoryListView.xaml</DependentUpon>
@@ -109,9 +115,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <DesignData Include="DesignData\DesignerListView.xaml">
+    <DesignData Include="DesignData\DesignerListViewModel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </DesignData>
+    <DesignData Include="DesignData\DesignerItemViewModel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </DesignData>
+    <DesignData Include="DesignData\DesignerMainViewModel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </DesignData>
     <Page Include="MainPage.xaml">
       <SubType>Designer</SubType>
@@ -183,10 +197,7 @@
       <Name>ItsBeen.App.Phone</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\" />
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -113,12 +113,7 @@ namespace ItsBeen.Phone
 		{
 			if (ViewModel != null)
 			{
-			    System.Windows.MessageBoxResult result = System.Windows.MessageBox.Show("Tap OK to delete the selected timer.", "Confirm Delete", System.Windows.MessageBoxButton.OKCancel);
-
-				if (result == System.Windows.MessageBoxResult.OK)
-				{
-					ViewModel.CommandDelete.Execute(null);
-				}
+			    ViewModel.CommandDelete.Execute(null);
 			}
 		}
 		/// <summary>
@@ -130,12 +125,7 @@ namespace ItsBeen.Phone
 		{
 			if (ViewModel != null)
 			{
-				System.Windows.MessageBoxResult result = System.Windows.MessageBox.Show("Tap OK to reset all timers.", "Confirm Reset All", System.Windows.MessageBoxButton.OKCancel);
-
-				if (result == System.Windows.MessageBoxResult.OK)
-				{
-					ViewModel.CommandResetAll.Execute(null);
-				}
+				ViewModel.CommandResetAll.Execute(null);
 			}
 		}
 

@@ -10,8 +10,7 @@
     <!--Application Resources-->
     <Application.Resources>
     	<ResourceDictionary>
-    		<vm:ViewModelLocator x:Key="Locator"
-    			d:IsDataSource="True" />
+    		<vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
     	</ResourceDictionary>
     </Application.Resources>
 

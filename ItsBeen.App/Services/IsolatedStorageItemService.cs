@@ -5,14 +5,11 @@ using System.IO;
 using System.IO.IsolatedStorage;
 using System.Xml.Serialization;
 
-using GalaSoft.MvvmLight.Messaging;
-
-using ItsBeen.App.Messaging;
 using ItsBeen.App.Model;
 
 namespace ItsBeen.App.Services
 {
-	public class IsolatedStorageItemService : ServiceBase, IItemService
+	public class IsolatedStorageItemService : IItemService
 	{
 		int i = 0;
 		private List<ItemModel> items;
@@ -28,20 +25,14 @@ namespace ItsBeen.App.Services
 		public IsolatedStorageItemService()
 		{
 			Initialize();
-			RegisterForMessages();
 		}
 
-		[XmlArray("Items")]
-		public IEnumerable<ItemModel> Items
+		public IEnumerable<ItemModel> GetItems()
 		{
-			get
-			{
-				if (items == null)
-					LoadDataFromStore();
-				return items.AsReadOnly();
-			}
+			if (items == null)
+				LoadDataFromStore();
+			return items.AsReadOnly();
 		}
-
 		public void AddItem(ItemModel item)
 		{
 			if (item == null)
@@ -52,10 +43,6 @@ namespace ItsBeen.App.Services
 			
 			items.Add(item);
 			SaveDataToStore();
-
-			OnPropertyChanged(new System.ComponentModel.PropertyChangedEventArgs("Items"));
-
-			Messenger.Default.Send(new NotificationMessage<ItemModel>(this, item, Notifications.NotifyItemAdded));
 		}
 		public void DeleteItem(ItemModel item)
 		{
@@ -67,10 +54,10 @@ namespace ItsBeen.App.Services
 
 			items.Remove(item);
 			SaveDataToStore();
-
-			OnPropertyChanged(new System.ComponentModel.PropertyChangedEventArgs("Items"));
-
-			Messenger.Default.Send(new NotificationMessage<ItemModel>(this, item, Notifications.NotifyItemDeleted));
+		}
+		public void SaveItems()
+		{
+			SaveDataToStore();
 		}
 		public ItemModel NewItem()
 		{
@@ -95,42 +82,6 @@ namespace ItsBeen.App.Services
 			}
 
 			serializer = new XmlSerializer(typeof(List<ItemModel>), new Type[] { typeof(ItemModel) });
-		}
-		private void RegisterForMessages()
-		{
-			Messenger.Default.Register<NotificationMessage>(this,
-				message =>
-				{
-					if (message.Notification == Commands.AddItem)
-					{
-						AddItem(NewItem());
-					}
-					else if (message.Notification == Notifications.NotifyResetAll)
-					{
-						SaveDataToStore();
-					}
-				});
-			Messenger.Default.Register<NotificationMessage<ItemModel>>(this,
-				message =>
-				{
-					if (message.Notification == Notifications.NotifyItemReset)
-					{
-						SaveDataToStore();
-					}
-					else if (message.Notification == Notifications.NotifyItemSaved)
-					{
-						ItemModel oldItem = items.Where(i => i.ID == message.Content.ID).FirstOrDefault();
-						if (oldItem != null)
-						{
-							items[items.IndexOf(oldItem)] = message.Content;
-							SaveDataToStore();
-						}
-					}
-					else if (message.Notification == Commands.DeleteItem)
-					{
-						DeleteItem(message.Content);
-					}
-				});
 		}
 		[System.Diagnostics.CodeAnalysis.SuppressMessage(
 			"Microsoft.Usage",

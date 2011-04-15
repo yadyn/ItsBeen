@@ -25,13 +25,6 @@ namespace ItsBeen.Phone.Views
 		public RecentListView()
 		{
 			InitializeComponent();
-
-			CollectionViewSource cvs = this.Resources["recentList"] as CollectionViewSource;
-			Binding cvsBinding = new Binding();
-			cvsBinding.Source = this.DataContext;
-			cvsBinding.Path = new PropertyPath("Items");
-			cvsBinding.Mode = BindingMode.OneWay;
-			BindingOperations.SetBinding(cvs, CollectionViewSource.SourceProperty, cvsBinding);
 		}
 	}
 }

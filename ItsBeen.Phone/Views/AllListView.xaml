@@ -9,8 +9,7 @@
 	mc:Ignorable="d"
 	x:Class="ItsBeen.Phone.Views.AllListView"
 	d:DesignWidth="456" d:DesignHeight="639"
-	d:DataContext="{d:DesignData Source=../DesignData/DesignerListView.xaml}"
-	DataContext="{Binding List, Mode=OneWay, Source={StaticResource Locator}}">
+	d:DataContext="{d:DesignData Source=../DesignData/DesignerListViewModel.xaml}">
 	<UserControl.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>

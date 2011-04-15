@@ -29,8 +29,6 @@ namespace ItsBeen.App.ViewModels
 
 		private ItemModel item;
 		private TimeSpan timeSince;
-		private event EventHandler beforeReset;
-		private event EventHandler afterReset;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ItemViewModel"/> class.
@@ -140,35 +138,11 @@ namespace ItsBeen.App.ViewModels
 				RaisePropertyChanged(TimeSincePropertyName);
 			}
 		}
-		public event EventHandler BeforeReset
-		{
-			add
-			{
-				beforeReset += value;
-			}
-			remove
-			{
-				beforeReset -= value;
-			}
-		}
-		public event EventHandler AfterReset
-		{
-			add
-			{
-				afterReset += value;
-			}
-			remove
-			{
-				afterReset -= value;
-			}
-		}
 
 		public void Reset()
 		{
-			OnBeforeReset(EventArgs.Empty);
 			LastUpdated = DateTime.Now;
 			RaisePropertyChanged(DueByPropertyName);
-			OnAfterReset(EventArgs.Empty);
 		}
 		public void UpdateTimeSince()
 		{
@@ -210,28 +184,7 @@ namespace ItsBeen.App.ViewModels
 		{
 			UpdateTimeSince();
 		}
-		/// <summary>
-		/// Raises the <see cref="E:BeforeReset"/> event.
-		/// </summary>
-		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-		private void OnBeforeReset(EventArgs e)
-		{
-			if (beforeReset != null)
-			{
-				beforeReset(this, e);
-			}
-		}
-		/// <summary>
-		/// Raises the <see cref="E:AfterReset"/> event.
-		/// </summary>
-		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-		private void OnAfterReset(EventArgs e)
-		{
-			if (afterReset != null)
-			{
-				afterReset(this, e);
-			}
-		}
+
 		private void RegisterForMessages()
 		{
 		}

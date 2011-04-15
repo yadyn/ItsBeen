@@ -20,7 +20,6 @@ namespace ItsBeen.Phone
 {
 	public partial class App : Application
 	{
-
 		// Easy access to the root frame
 		public PhoneApplicationFrame RootFrame { get; private set; }
 
@@ -30,6 +29,9 @@ namespace ItsBeen.Phone
 			// Global handler for uncaught exceptions. 
 			// Note that exceptions thrown by ApplicationBarItem.Click will not get caught here.
 			UnhandledException += Application_UnhandledException;
+
+			// Bootstrapper, IoC initialization
+			Bootstrapper.Initialize();
 
 			// Standard Silverlight initialization
 			InitializeComponent();

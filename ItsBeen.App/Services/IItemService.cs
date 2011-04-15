@@ -9,11 +9,12 @@ namespace ItsBeen.App.Services
 	/// <summary>
 	/// Provides a means for working with Item business objects.
 	/// </summary>
-	public interface IItemService : INotifyPropertyChanged
+	public interface IItemService
 	{
-		IEnumerable<ItemModel> Items { get; }
+		IEnumerable<ItemModel> GetItems();
 		void AddItem(ItemModel item);
 		void DeleteItem(ItemModel item);
+		void SaveItems();
 		ItemModel NewItem();
 	}
 }

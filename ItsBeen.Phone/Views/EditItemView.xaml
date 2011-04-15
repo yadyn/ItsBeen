@@ -27,7 +27,7 @@
 					Grid.Row="0"
 					Margin="24,24,0,12">
 			<TextBlock x:Name="ApplicationTitle"
-					   Text="{Binding PageTitle}"
+					   Text="{Binding ApplicationName}"
 					   Style="{StaticResource PhoneTextNormalStyle}" />
 			<TextBlock x:Name="PageTitle"
 					   Text="{Binding PageName}"

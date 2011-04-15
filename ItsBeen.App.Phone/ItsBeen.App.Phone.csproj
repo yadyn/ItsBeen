@@ -41,11 +41,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Funq">
+      <HintPath>..\Assemblies\WP7\Funq.dll</HintPath>
+    </Reference>
     <Reference Include="GalaSoft.MvvmLight.Extras.WP7">
-      <HintPath>..\Assemblies\GalaSoft.MvvmLight.Extras.WP7.dll</HintPath>
+      <HintPath>..\Assemblies\WP7\GalaSoft.MvvmLight.Extras.WP7.dll</HintPath>
     </Reference>
     <Reference Include="GalaSoft.MvvmLight.WP7">
-      <HintPath>..\Assemblies\GalaSoft.MvvmLight.WP7.dll</HintPath>
+      <HintPath>..\Assemblies\WP7\GalaSoft.MvvmLight.WP7.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
@@ -55,6 +58,9 @@
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\ItsBeen.App\AppFunqlet.cs">
+      <Link>AppFunqlet.cs</Link>
+    </Compile>
     <Compile Include="..\ItsBeen.App\Messaging\Commands.cs">
       <Link>Messaging\Commands.cs</Link>
     </Compile>
@@ -67,14 +73,14 @@
     <Compile Include="..\ItsBeen.App\Services\IItemService.cs">
       <Link>Services\IItemService.cs</Link>
     </Compile>
+    <Compile Include="..\ItsBeen.App\Services\IMessageBoxService.cs">
+      <Link>Services\IMessageBoxService.cs</Link>
+    </Compile>
     <Compile Include="..\ItsBeen.App\Services\InMemoryItemService.cs">
       <Link>Services\InMemoryItemService.cs</Link>
     </Compile>
     <Compile Include="..\ItsBeen.App\Services\IsolatedStorageItemService.cs">
       <Link>Services\IsolatedStorageItemService.cs</Link>
-    </Compile>
-    <Compile Include="..\ItsBeen.App\Services\ServiceBase.cs">
-      <Link>Services\ServiceBase.cs</Link>
     </Compile>
     <Compile Include="..\ItsBeen.App\ViewModels\AppViewModel.cs">
       <Link>ViewModels\AppViewModel.cs</Link>
@@ -95,6 +101,17 @@
       <Link>ViewModels\ViewModelLocator.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />

@@ -8,7 +8,8 @@
 	xmlns:im="clr-namespace:Microsoft.Expression.Interactivity.Media;assembly=Microsoft.Expression.Interactions"
 	x:Class="ItsBeen.Phone.Views.ItemView"
 	mc:Ignorable="d"
-	d:DesignHeight="120" d:DesignWidth="480">
+	d:DesignWidth="480" d:DesignHeight="120"
+	d:DataContext="{d:DesignData Source=../DesignData/DesignerItemViewModel.xaml}">
 	<UserControl.Resources>
 		<behav:TimeSinceConverter x:Key="TimeSinceConverter"/>
 		<Storyboard x:Name="ResetStoryboard">
@@ -54,9 +55,6 @@
 			</DoubleAnimationUsingKeyFrames>
 		</Storyboard>
 	</UserControl.Resources>
-	<UserControl.DataContext>
-		<Binding Mode="OneWay" Path="Item" Source="{StaticResource Locator}"/>
-	</UserControl.DataContext>
 	<UserControl.FontFamily>
 		<StaticResource ResourceKey="PhoneFontFamilyNormal"/>
 	</UserControl.FontFamily>
@@ -66,28 +64,26 @@
 	<UserControl.Foreground>
 		<StaticResource ResourceKey="PhoneForegroundBrush"/>
 	</UserControl.Foreground>
-	
-	<ContentControl x:Name="LayoutRoot" Background="{StaticResource PhoneChromeBrush}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-		<Grid x:Name="GridItemDetails">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition/>
-				<ColumnDefinition Width="Auto"/>
-			</Grid.ColumnDefinitions>
-			<Grid.RowDefinitions>
-				<RowDefinition Height="3*"/>
-				<RowDefinition Height="2*"/>
-				<RowDefinition Height="2*"/>
-			</Grid.RowDefinitions>
-			<TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextLargeStyle}" VerticalAlignment="Center"/>
-			<TextBlock Text="{Binding Description}" Style="{StaticResource PhoneTextSubtleStyle}" Grid.Row="1" VerticalAlignment="Center"/>
-			<TextBlock x:Name="TimeSinceBlock" Grid.Row="2" Text="{Binding TimeSince, Converter={StaticResource TimeSinceConverter}, Mode=OneWay}" VerticalAlignment="Center" Style="{StaticResource PhoneTextNormalStyle}" FontSize="13.333">
-				<TextBlock.Projection>
-					<PlaneProjection/>
-				</TextBlock.Projection>
-				<TextBlock.RenderTransform>
-					<CompositeTransform/>
-				</TextBlock.RenderTransform>
-			</TextBlock>
-		</Grid>
-	</ContentControl>
+
+	<Grid x:Name="LayoutRoot">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition/>
+			<ColumnDefinition Width="Auto"/>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="3*"/>
+			<RowDefinition Height="2*"/>
+			<RowDefinition Height="2*"/>
+		</Grid.RowDefinitions>
+		<TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextLargeStyle}" VerticalAlignment="Center"/>
+		<TextBlock Text="{Binding Description}" Style="{StaticResource PhoneTextSubtleStyle}" Grid.Row="1" VerticalAlignment="Center"/>
+		<TextBlock x:Name="TimeSinceBlock" Grid.Row="2" Text="{Binding TimeSince, Converter={StaticResource TimeSinceConverter}, Mode=OneWay}" VerticalAlignment="Center" Style="{StaticResource PhoneTextNormalStyle}" FontSize="13.333" Margin="12,0" Width="456">
+			<TextBlock.Projection>
+				<PlaneProjection/>
+			</TextBlock.Projection>
+			<TextBlock.RenderTransform>
+				<CompositeTransform/>
+			</TextBlock.RenderTransform>
+		</TextBlock>
+	</Grid>
 </UserControl>

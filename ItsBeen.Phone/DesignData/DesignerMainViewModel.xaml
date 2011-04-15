@@ -1,0 +1,8 @@
+﻿<vm:MainViewModel
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:vm="clr-namespace:ItsBeen.App.ViewModels;assembly=ItsBeen.App.Phone"
+	xmlns:model="clr-namespace:ItsBeen.App.Model;assembly=ItsBeen.App.Phone"
+	
+	ApplicationName="ItsBeen"
+	IsItemSelected="False">
+</vm:MainViewModel>

@@ -48,16 +48,19 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Funq">
+      <HintPath>..\Assemblies\WPF4\Funq.dll</HintPath>
+    </Reference>
     <Reference Include="GalaSoft.MvvmLight.Extras.WPF4">
-      <HintPath>..\Assemblies\GalaSoft.MvvmLight.Extras.WPF4.dll</HintPath>
+      <HintPath>..\Assemblies\WPF4\GalaSoft.MvvmLight.Extras.WPF4.dll</HintPath>
     </Reference>
     <Reference Include="GalaSoft.MvvmLight.WPF4">
-      <HintPath>..\Assemblies\GalaSoft.MvvmLight.WPF4.dll</HintPath>
+      <HintPath>..\Assemblies\WPF4\GalaSoft.MvvmLight.WPF4.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Expression.Interactions" />
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\Assemblies\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -69,6 +72,9 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="TaskDialog">
+      <HintPath>..\Assemblies\WPF4\TaskDialog.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -78,11 +84,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <DesignData Include="DesignData\DesignerListView.xaml">
+    <DesignData Include="DesignData\DesignerListViewModel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </DesignData>
-    <DesignData Include="DesignData\DesignerItemView.xaml">
+    <DesignData Include="DesignData\DesignerItemViewModel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </DesignData>
+    <DesignData Include="DesignData\DesignerMainViewModel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </DesignData>
@@ -110,6 +120,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\RecentListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\ItemView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -122,10 +136,20 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Bootstrapper.cs" />
+    <Compile Include="ClientFunqlet.cs" />
     <Compile Include="Common\GeneralConverters.cs" />
     <Compile Include="Common\TimeSinceConverter.cs" />
+    <Compile Include="Messaging\TaskDialogMessage.cs" />
+    <Compile Include="Services\DialogHelper.cs" />
+    <Compile Include="Services\ITaskDialogService.cs" />
+    <Compile Include="Services\TaskDialogService.cs" />
+    <Compile Include="SingleInstance.cs" />
     <Compile Include="Views\AllListView.xaml.cs">
       <DependentUpon>AllListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RecentListView.xaml.cs">
+      <DependentUpon>RecentListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ItemView.xaml.cs">
       <DependentUpon>ItemView.xaml</DependentUpon>
@@ -164,9 +188,7 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModel\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\ItsBeen.App\ItsBeen.App.csproj">
       <Project>{534F5342-1D7C-461E-AC6C-4C15EA83F2A2}</Project>

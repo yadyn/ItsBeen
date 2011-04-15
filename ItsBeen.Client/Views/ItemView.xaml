@@ -7,7 +7,7 @@
 	mc:Ignorable="d"
 	x:Class="ItsBeen.Client.Views.ItemView"
 	d:DesignWidth="400"
-	d:DataContext="{d:DesignData Source=../DesignData/DesignerItemView.xaml}">
+	d:DataContext="{d:DesignData Source=../DesignData/DesignerItemViewModel.xaml}">
 
 	<UserControl.Resources>
 		<common:NotNullOrEmptyVisibilityConverter x:Key="NotNullOrEmptyVisibilityConverter"/>
