@@ -22,7 +22,11 @@ namespace ItsBeen.App
 
 			// ViewModels
 			ViewModelLocator.Container = container;
-			container.Register(c => new MainViewModel(c.Resolve<IMessageBoxService>(), c.Resolve<IItemService>()));
+			container.Register(c =>
+				new MainViewModel(
+					c.ResolveNamed<IEnumerable<object>>("MainListViews"),
+					c.Resolve<IMessageBoxService>(),
+					c.Resolve<IItemService>()));
 			container.Register(c => new EditItemViewModel());
 		}
 	}

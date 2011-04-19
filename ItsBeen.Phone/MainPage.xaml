@@ -6,28 +6,33 @@
 	xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
 	xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:dd="clr-namespace:ItsBeen.Phone.DesignData"
+	xmlns:behaviors="clr-namespace:ItsBeen.Phone.Behaviors"
 	xmlns:views="clr-namespace:ItsBeen.Phone.Views"
 	mc:Ignorable="d"
 	d:DesignWidth="480" d:DesignHeight="696"
-	d:DataContext="{d:DesignData Source=DesignData/DesignerMainViewModel.xaml}"
+	d:DataContext="{d:DesignInstance dd:DesignerMainViewModel, IsDesignTimeCreatable=True}"
 	DataContext="{Binding Main, Source={StaticResource Locator}}"
 	FontFamily="{StaticResource PhoneFontFamilyNormal}"
 	FontSize="{StaticResource PhoneFontSizeNormal}"
 	Foreground="{StaticResource PhoneForegroundBrush}"
-	SupportedOrientations="Portrait"  Orientation="Portrait"
+	SupportedOrientations="Portrait" Orientation="Portrait"
 	shell:SystemTray.IsVisible="True">
+
+	<phone:PhoneApplicationPage.Resources>
+		<ResourceDictionary>
+			 <behaviors:PivotItemConverter x:Key="PivotItemConverter"/>
+		</ResourceDictionary>
+	</phone:PhoneApplicationPage.Resources>
+
 	<Grid x:Name="LayoutRoot" Background="Transparent">
-		<controls:Pivot x:Name="PivotMenu" Title="{Binding ApplicationName, Mode=OneWay}" SelectionChanged="PivotMenu_SelectionChanged">
-			<controls:PivotItem Header="All">
-				<views:AllListView DataContext="{Binding List, Source={StaticResource Locator}}" d:DataContext="{d:DesignData Source=DesignData/DesignerListViewModel.xaml}"/>
-			</controls:PivotItem>
-			<controls:PivotItem Header="Recent">
-				<views:RecentListView DataContext="{Binding List, Source={StaticResource Locator}}" d:DataContext="{d:DesignData Source=DesignData/DesignerListViewModel.xaml}"/>
-			</controls:PivotItem>
-			<controls:PivotItem Header="Categorized">
-				<views:CategoryListView DataContext="{Binding List, Source={StaticResource Locator}}" d:DataContext="{d:DesignData Source=DesignData/DesignerListViewModel.xaml}"/>
-			</controls:PivotItem>
+		<controls:Pivot x:Name="PivotMenu" Title="{Binding ApplicationName, Mode=OneWay}" ItemsSource="{Binding ListViews, Converter={StaticResource PivotItemConverter}}" SelectedItem="{Binding ActiveListView, Mode=TwoWay}">
+			<controls:Pivot.HeaderTemplate>
+				<DataTemplate>
+					<TextBlock Text="{Binding ListType}"/>
+				</DataTemplate>
+			</controls:Pivot.HeaderTemplate>
 		</controls:Pivot>
 	</Grid>
 	<phone:PhoneApplicationPage.ApplicationBar>

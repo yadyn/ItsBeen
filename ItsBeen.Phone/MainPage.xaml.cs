@@ -44,6 +44,12 @@ namespace ItsBeen.Phone
 			if (ViewModel != null)
 			{
 				ViewModel.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(ViewModel_PropertyChanged);
+				
+				// Silverlight has no CommandManager and the AppBar doesn't support binding so
+				//we have to manually wire CanExecuteChanged events to update them
+				ViewModel.CommandEdit.CanExecuteChanged += new EventHandler(AppBarCommands_CanExecuteChanged);
+				ViewModel.CommandReset.CanExecuteChanged += new EventHandler(AppBarCommands_CanExecuteChanged);
+				ViewModel.CommandDelete.CanExecuteChanged += new EventHandler(AppBarCommands_CanExecuteChanged);
 			}
 		}
 		/// <summary>
@@ -59,11 +65,11 @@ namespace ItsBeen.Phone
 			}
 		}
 		/// <summary>
-		/// Handles the SelectionChanged event of the PivotMenu control.
+		/// Handles the CanExecuteChanged event of any AppBar Command controls.
 		/// </summary>
 		/// <param name="sender">The source of the event.</param>
-		/// <param name="e">The <see cref="System.Windows.Controls.SelectionChangedEventArgs"/> instance containing the event data.</param>
-		private void PivotMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+		private void AppBarCommands_CanExecuteChanged(object sender, EventArgs e)
 		{
 			SetEnabledAppBarButtons();
 		}
@@ -131,7 +137,7 @@ namespace ItsBeen.Phone
 
 		private void SetEnabledAppBarButtons()
 		{
-			bool enable = ViewModel.IsItemSelected && ViewModel.ItemSelectedKey == ((PivotMenu.SelectedItem as PivotItem).Content as Control).DataContext;
+			bool enable = ViewModel.IsItemSelected;
 			
 			(ApplicationBar.Buttons[1] as Microsoft.Phone.Shell.ApplicationBarIconButton).IsEnabled = enable;
 			(ApplicationBar.Buttons[2] as Microsoft.Phone.Shell.ApplicationBarIconButton).IsEnabled = enable;

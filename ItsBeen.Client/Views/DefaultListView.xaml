@@ -7,7 +7,7 @@
 	xmlns:i11y="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 	xmlns:gcmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WPF4"
 	mc:Ignorable="d"
-	x:Class="ItsBeen.Client.Views.AllListView"
+	x:Class="ItsBeen.Client.Views.DefaultListView"
 	d:DesignWidth="400"
 	d:DataContext="{d:DesignData Source=../DesignData/DesignerListViewModel.xaml}">
 

@@ -92,10 +92,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </DesignData>
-    <DesignData Include="DesignData\DesignerMainViewModel.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </DesignData>
     <Page Include="Skins\Brushes.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -116,11 +112,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\AllListView.xaml">
+    <Page Include="Views\DefaultListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\RecentListView.xaml">
+    <Page Include="Views\FilterListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -140,16 +136,17 @@
     <Compile Include="ClientFunqlet.cs" />
     <Compile Include="Common\GeneralConverters.cs" />
     <Compile Include="Common\TimeSinceConverter.cs" />
+    <Compile Include="DesignData\DesignerMainViewModel.cs" />
     <Compile Include="Messaging\TaskDialogMessage.cs" />
     <Compile Include="Services\DialogHelper.cs" />
     <Compile Include="Services\ITaskDialogService.cs" />
     <Compile Include="Services\TaskDialogService.cs" />
     <Compile Include="SingleInstance.cs" />
-    <Compile Include="Views\AllListView.xaml.cs">
-      <DependentUpon>AllListView.xaml</DependentUpon>
+    <Compile Include="Views\DefaultListView.xaml.cs">
+      <DependentUpon>DefaultListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RecentListView.xaml.cs">
-      <DependentUpon>RecentListView.xaml</DependentUpon>
+    <Compile Include="Views\FilterListView.xaml.cs">
+      <DependentUpon>FilterListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ItemView.xaml.cs">
       <DependentUpon>ItemView.xaml</DependentUpon>

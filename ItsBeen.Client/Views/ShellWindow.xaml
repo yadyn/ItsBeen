@@ -4,34 +4,28 @@
 	xmlns:views="clr-namespace:ItsBeen.Client.Views"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:dd="clr-namespace:ItsBeen.Client.DesignData"
 	xmlns:common="clr-namespace:ItsBeen.Client.Common"
 	mc:Ignorable="d"
 	x:Class="ItsBeen.Client.Views.ShellWindow"
-	d:DataContext="{d:DesignData Source=../DesignData/DesignerMainViewModel.xaml}"
+    d:DataContext="{d:DesignInstance dd:DesignerMainViewModel, IsDesignTimeCreatable=True}"
 	DataContext="{Binding Main, Source={StaticResource Locator}}"
 	Width="400" Height="600"
 	Title="{Binding ApplicationName, Mode=OneWay}"
 	ResizeMode="CanMinimize">
-
-	<Window.Resources>
-		<ResourceDictionary>
-			<common:AppBarConverter x:Key="AppBarConverter"/>
-		</ResourceDictionary>
-	</Window.Resources>
 
 	<Grid x:Name="LayoutRoot">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*"/>
 			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
-		<TabControl x:Name="TabRoot" SelectionChanged="TabRoot_SelectionChanged">
-			<TabItem Header="All">
-				<views:AllListView DataContext="{Binding AllListViewModel}" d:DataContext="{d:DesignData Source=../DesignData/DesignerListViewModel.xaml}"/>
-			</TabItem>
-			<TabItem Header="Recent">
-				<views:RecentListView DataContext="{Binding RecentListViewModel}" d:DataContext="{d:DesignData Source=../DesignData/DesignerListViewModel.xaml}"/>
-			</TabItem>
-			<TabItem Header="Categorized"/>
+		<TabControl x:Name="TabRoot" ItemsSource="{Binding ListViews}" SelectedItem="{Binding ActiveListView, Mode=TwoWay}">
+			<TabControl.ItemContainerStyle>
+				<Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource {x:Type TabItem}}">
+					<Setter Property="Header" Value="{Binding DataContext.ListType}"/>
+					<Setter Property="Content" Value="{Binding}"/>
+				</Style>
+			</TabControl.ItemContainerStyle>
 		</TabControl>
 		<Border Grid.Row="1" Padding="4" BorderBrush="{DynamicResource GrayBrush1}" BorderThickness="0,1,0,0">
 			<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">

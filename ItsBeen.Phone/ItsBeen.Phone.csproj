@@ -82,11 +82,13 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Behaviors\GeneralConverters.cs" />
+    <Compile Include="Behaviors\PivotItemConverter.cs" />
     <Compile Include="Behaviors\TimeSinceConverter.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controls\ExtensionMethods.cs" />
     <Compile Include="Controls\FluidListBox.cs" />
     <Compile Include="Controls\PickerBoxDialog.cs" />
+    <Compile Include="DesignData\DesignerMainViewModel.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -94,8 +96,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\MessageBoxService.cs" />
     <Compile Include="TiltEffect.cs" />
-    <Compile Include="Views\CategoryListView.xaml.cs">
-      <DependentUpon>CategoryListView.xaml</DependentUpon>
+    <Compile Include="Views\FilterListView.xaml.cs">
+      <DependentUpon>FilterListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EditItemView.xaml.cs">
       <DependentUpon>EditItemView.xaml</DependentUpon>
@@ -103,11 +105,8 @@
     <Compile Include="Views\ItemView.xaml.cs">
       <DependentUpon>ItemView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\AllListView.xaml.cs">
-      <DependentUpon>AllListView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\RecentListView.xaml.cs">
-      <DependentUpon>RecentListView.xaml</DependentUpon>
+    <Compile Include="Views\DefaultListView.xaml.cs">
+      <DependentUpon>DefaultListView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -123,10 +122,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </DesignData>
-    <DesignData Include="DesignData\DesignerMainViewModel.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </DesignData>
     <Page Include="MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -139,7 +134,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\CategoryListView.xaml">
+    <Page Include="Views\FilterListView.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -151,12 +146,8 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\AllListView.xaml">
+    <Page Include="Views\DefaultListView.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\RecentListView.xaml">
-      <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

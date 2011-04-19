@@ -2,7 +2,79 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:vm="clr-namespace:ItsBeen.App.ViewModels;assembly=ItsBeen.App.Phone"
 	xmlns:model="clr-namespace:ItsBeen.App.Model;assembly=ItsBeen.App.Phone"
+	xmlns:views="clr-namespace:ItsBeen.Phone.Views"
 	
-	ApplicationName="ItsBeen"
-	IsItemSelected="False">
+	ApplicationName="ItsBeen">
+	<vm:MainViewModel.ListViews>
+		<views:DefaultListView>
+			<views:DefaultListView.DataContext>
+				<vm:ListViewModel ListType="All">
+					<vm:ListViewModel.Items>
+						<vm:ItemViewModel
+							Name="Test Item 1"
+							Description="This is a test item."
+							Created="7/4/2010 10:04:56 AM"
+							LastUpdated="3/30/2011 11:21:09 AM"
+							DueBy="{x:Null}"
+							TimeSince="7.6:12:14">
+						</vm:ItemViewModel>
+						<vm:ItemViewModel
+							Name="Test Item 2"
+							Description="This is another test item."
+							Created="8/9/2010 11:17:32 PM"
+							LastUpdated="8/9/2010 11:17:32 AM"
+							DueBy="{x:Null}"
+							TimeSince="177.3:22:06">
+						</vm:ItemViewModel>
+						<vm:ItemViewModel
+							Name="Test Item 3"
+							Created="9/21/2010 8:24:50 AM"
+							LastUpdated="4/6/2011 9:51:15 AM"
+							DueBy="{x:Null}"
+							TimeSince="0:21:33">
+						</vm:ItemViewModel>
+					</vm:ListViewModel.Items>
+				</vm:ListViewModel>
+			</views:DefaultListView.DataContext>
+		</views:DefaultListView>
+		<views:DefaultListView>
+			<views:DefaultListView.DataContext>
+				<vm:ListViewModel ListType="Recent">
+					<vm:ListViewModel.Items>
+						<vm:ItemViewModel
+							Name="Test Item 5"
+							Description="This is another test item."
+							Created="8/9/2010 11:17:32 PM"
+							LastUpdated="8/9/2010 11:17:32 AM"
+							DueBy="{x:Null}"
+							TimeSince="177.3:22:06">
+						</vm:ItemViewModel>
+						<vm:ItemViewModel
+							Name="Test Item 4"
+							Description="This is a test item."
+							Created="7/4/2010 10:04:56 AM"
+							LastUpdated="3/30/2011 11:21:09 AM"
+							DueBy="{x:Null}"
+							TimeSince="7.6:12:14">
+						</vm:ItemViewModel>
+					</vm:ListViewModel.Items>
+				</vm:ListViewModel>
+			</views:DefaultListView.DataContext>
+		</views:DefaultListView>
+		<views:FilterListView>
+			<views:FilterListView.DataContext>
+				<vm:ListViewModel ListType="Categorized">
+					<vm:ListViewModel.Items>
+						<vm:ItemViewModel
+							Name="Test Item 6"
+							Created="9/21/2010 8:24:50 AM"
+							LastUpdated="4/6/2011 9:51:15 AM"
+							DueBy="{x:Null}"
+							TimeSince="0:21:33">
+						</vm:ItemViewModel>
+					</vm:ListViewModel.Items>
+				</vm:ListViewModel>
+			</views:FilterListView.DataContext>
+		</views:FilterListView>
+	</vm:MainViewModel.ListViews>
 </vm:MainViewModel>

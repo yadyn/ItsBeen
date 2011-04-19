@@ -15,12 +15,13 @@ namespace ItsBeen.App.ViewModels
 {
 	/// <summary>
 	/// This class contains properties that a View can data bind to.
-	/// <para>
+	/// </summary>
 	public class ListViewModel : AppViewModel
 	{
 		private static readonly string ItemsPropertyName = "Items";
 
 		private readonly IItemService _itemService;
+		private readonly string _listType;
 
 		private ObservableCollection<ItemViewModel> items;
 		private System.Windows.Threading.DispatcherTimer ticker;
@@ -32,12 +33,13 @@ namespace ItsBeen.App.ViewModels
 		/// Initializes a new instance of the <see cref="ListViewModel"/> class.
 		/// </summary>
 		/// <param name="itemService">An item service.</param>
-		public ListViewModel(IItemService itemService)
+		public ListViewModel(string listType, IItemService itemService)
 		{
 			if (itemService == null)
 				throw new ArgumentNullException("itemService");
 
 			this._itemService = itemService;
+			this._listType = listType;
 
 			// Must initialize ticker BEFORE building item collection!
 			ticker = new System.Windows.Threading.DispatcherTimer();
@@ -52,6 +54,13 @@ namespace ItsBeen.App.ViewModels
 				ticker.Start();
 		}
 
+		public string ListType
+		{
+			get
+			{
+				return _listType;
+			}
+		}
 		public bool IsItemSelected
 		{
 			get
@@ -92,10 +101,11 @@ namespace ItsBeen.App.ViewModels
 				if (commandSelect == null)
 				{
 					commandSelect = new RelayCommand<System.Windows.Controls.SelectionChangedEventArgs>(e =>
-					{
-						SelectedItem = (e.AddedItems.Count > 0) ? (e.AddedItems[0] as ItemViewModel) : null;
-						Messenger.Default.Send(new NotificationMessage<ItemModel>(this, SelectedItem.Item, Notifications.NotifyItemSelected));
-					});
+						{
+							SelectedItem = (e.AddedItems.Count > 0) ? (e.AddedItems[0] as ItemViewModel) : null;
+							// This command is also executed when a de-select happens so make sure something is selected
+							Messenger.Default.Send(new NotificationMessage<ItemModel>(this, (SelectedItem == null) ? null : SelectedItem.Item, Notifications.NotifyItemSelected));
+						});
 				}
 				return commandSelect;
 			}
@@ -119,8 +129,7 @@ namespace ItsBeen.App.ViewModels
 			Justification = "Object remains in collection after method ends and thus should not be disposed.")]
 		private void RegisterForMessages()
 		{
-			Messenger.Default.Register<NotificationMessage<ItemModel>>(this,
-				message =>
+			Messenger.Default.Register<NotificationMessage<ItemModel>>(this, message =>
 				{
 					if (message.Notification == Notifications.NotifyItemAdded)
 					{

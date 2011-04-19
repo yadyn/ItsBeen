@@ -8,7 +8,7 @@
 	xmlns:gcmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WPF4"
 	xmlns:compMod="clr-namespace:System.ComponentModel;assembly=WindowsBase"
 	mc:Ignorable="d"
-	x:Class="ItsBeen.Client.Views.RecentListView"
+	x:Class="ItsBeen.Client.Views.FilterListView"
 	x:Name="UserControl"
 	d:DesignWidth="400"
 	d:DataContext="{d:DesignData Source=../DesignData/DesignerListViewModel.xaml}">

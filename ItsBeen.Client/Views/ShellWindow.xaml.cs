@@ -18,15 +18,5 @@ namespace ItsBeen.Client.Views
 			InitializeComponent();
 			Closing += (s, e) => ViewModelLocator.Cleanup();
 		}
-
-		private void TabRoot_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-		{
-			new Button[] { EditButton, ResetButton, DeleteButton }.ToList().ForEach(b =>
-				{
-					var expression = BindingOperations.GetMultiBindingExpression(b, Button.IsEnabledProperty);
-					if (expression != null)
-						expression.UpdateTarget();
-				});
-		}
 	}
 }

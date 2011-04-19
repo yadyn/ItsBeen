@@ -14,11 +14,11 @@ using System.Windows.Shapes;
 namespace ItsBeen.Client.Views
 {
 	/// <summary>
-	/// Interaction logic for RecentListView.xaml
+	/// Interaction logic for FilterListView.xaml
 	/// </summary>
-	public partial class RecentListView : UserControl
+	public partial class FilterListView : UserControl
 	{
-		public RecentListView()
+		public FilterListView()
 		{
 			this.InitializeComponent();
 		}

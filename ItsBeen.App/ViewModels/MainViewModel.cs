@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -16,18 +17,14 @@ namespace ItsBeen.App.ViewModels
 	/// <summary>
 	/// This class contains properties that the main View can data bind to.
 	/// </summary>
-	/// <remarks>
-	/// <para>
-	/// Use the <strong>mvvminpc</strong> snippet to add bindable properties to this ViewModel.
-	/// </para>
-	/// </remarks>
 	public class MainViewModel : AppViewModel
 	{
 		private readonly IMessageBoxService _messageBoxService;
 		private readonly IItemService _itemService;
-		private readonly ObservableCollection<ListViewModel> _listViewModels;
+		private readonly ObservableCollection<object> _listViews;
 
-		private ListViewModel _commandContext;
+		private object _activeListView;
+		private ListViewModel _activeListViewModel;
 
 		private ICommand _commandAdd;
 		private ICommand _commandEdit;
@@ -38,9 +35,12 @@ namespace ItsBeen.App.ViewModels
 		/// <summary>
 		/// Initializes a new instance of the MainViewModel class.
 		/// </summary>
+		/// <param name="defaultListView">The default list view.</param>
+		/// <param name="filterListView">The filter list view.</param>
 		/// <param name="messageBoxService">A message box service.</param>
 		/// <param name="itemService">An item service.</param>
-		public MainViewModel(IMessageBoxService messageBoxService, IItemService itemService)
+		public MainViewModel(IEnumerable<object> listViews,
+			IMessageBoxService messageBoxService, IItemService itemService)
 		{
 			if (messageBoxService == null)
 				throw new ArgumentNullException("messageBoxService");
@@ -50,25 +50,28 @@ namespace ItsBeen.App.ViewModels
 			_messageBoxService = messageBoxService;
 			_itemService = itemService;
 
-			_listViewModels = new ObservableCollection<ListViewModel>();
-			_listViewModels.Add(new ListViewModel(_itemService));
-			_listViewModels.Add(new ListViewModel(_itemService));
-			_listViewModels.Add(new ListViewModel(_itemService));
+			_listViews = new ObservableCollection<object>();
 
-			_commandContext = _listViewModels[0];
+			if (listViews != null)
+			{
+				foreach (object obj in listViews)
+				{
+					_listViews.Add(obj);
+				}
+			}
 
 			RegisterForMessages();
 		}
 
-		private ListViewModel CommandContext
+		private ListViewModel ActiveListViewModel
 		{
 			get
 			{
-				return _commandContext;
+				return _activeListViewModel;
 			}
 			set
 			{
-				_commandContext = value;
+				_activeListViewModel = value;
 
 				RaisePropertyChanged("IsItemSelected");
 				RaiseCanExecuteChanged(CommandEdit);
@@ -81,14 +84,30 @@ namespace ItsBeen.App.ViewModels
 		{
 			get
 			{
-				return false;
+				return ActiveListViewModel != null && ActiveListViewModel.IsItemSelected;
 			}
 		}
-		public ObservableCollection<ListViewModel> ListViewModels
+		public object ActiveListView
 		{
 			get
 			{
-				return _listViewModels;
+				return _activeListView;
+			}
+			set
+			{
+				_activeListView = value;
+
+				if (value is System.Windows.Controls.Control)
+					ActiveListViewModel = (value as System.Windows.Controls.Control).DataContext as ListViewModel;
+
+				RaisePropertyChanged("ActiveListView");
+			}
+		}
+		public ObservableCollection<object> ListViews
+		{
+			get
+			{
+				return _listViews;
 			}
 		}
 
@@ -131,9 +150,9 @@ namespace ItsBeen.App.ViewModels
 				{
 					_commandReset = new RelayCommand(() =>
 					{
-						CommandContext.SelectedItem.Reset();
+						ActiveListViewModel.SelectedItem.Reset();
 						_itemService.SaveItems();
-						Messenger.Default.Send(new NotificationMessage<ItemModel>(this, CommandContext.SelectedItem.Item, Notifications.NotifyItemReset));
+						Messenger.Default.Send(new NotificationMessage<ItemModel>(this, ActiveListViewModel.SelectedItem.Item, Notifications.NotifyItemReset));
 					}, () => IsItemSelected);
 				}
 				return _commandReset;
@@ -151,7 +170,7 @@ namespace ItsBeen.App.ViewModels
 						{
 							if (result == System.Windows.MessageBoxResult.OK || result == System.Windows.MessageBoxResult.Yes)
 							{
-								CommandContext.Items.ToList().ForEach(ivm => ivm.Reset());
+								ActiveListViewModel.Items.ToList().ForEach(ivm => ivm.Reset());
 								_itemService.SaveItems();
 								Messenger.Default.Send(new NotificationMessage(this, Notifications.NotifyResetAll));
 							}
@@ -178,14 +197,16 @@ namespace ItsBeen.App.ViewModels
 				{
 					_commandDelete = new RelayCommand(() =>
 					{
-						DialogMessage message = new DialogMessage(this, Properties.Resources.ConfirmItemDeleteContent, result =>
-						{
-							if (result == System.Windows.MessageBoxResult.OK || result == System.Windows.MessageBoxResult.Yes)
-							{
-								_itemService.DeleteItem(CommandContext.SelectedItem.Item);
-								Messenger.Default.Send(new NotificationMessage<ItemModel>(this, CommandContext.SelectedItem.Item, Notifications.NotifyItemDeleted));
-							}
-						});
+						DialogMessage message = new DialogMessage(this,
+							String.Format(Properties.Resources.ConfirmItemDeleteContent, ActiveListViewModel.SelectedItem.Item.Name),
+							result =>
+								{
+									if (result == System.Windows.MessageBoxResult.OK || result == System.Windows.MessageBoxResult.Yes)
+									{
+										_itemService.DeleteItem(ActiveListViewModel.SelectedItem.Item);
+										Messenger.Default.Send(new NotificationMessage<ItemModel>(this, ActiveListViewModel.SelectedItem.Item, Notifications.NotifyItemDeleted));
+									}
+								});
 						message.Caption = Properties.Resources.ConfirmItemDeleteCaption;
 #if WINDOWS_PHONE
 						message.Button = System.Windows.MessageBoxButton.OKCancel;
@@ -203,8 +224,7 @@ namespace ItsBeen.App.ViewModels
 
 		private void RegisterForMessages()
 		{
-			Messenger.Default.Register<NotificationMessage>(this,
-				message =>
+			Messenger.Default.Register<NotificationMessage>(this, message =>
 				{
 					if (message.Notification == Commands.AddItem)
 					{
@@ -232,12 +252,14 @@ namespace ItsBeen.App.ViewModels
 							CommandResetAll.Execute(null);
 					}
 				});
-			Messenger.Default.Register<NotificationMessage<ItemModel>>(this,
-				message =>
+			Messenger.Default.Register<NotificationMessage<ItemModel>>(this, message =>
 				{
 					if (message.Notification == Notifications.NotifyItemSelected)
 					{
-						CommandContext = message.Sender as ListViewModel;
+						RaisePropertyChanged("IsItemSelected");
+						RaiseCanExecuteChanged(CommandEdit);
+						RaiseCanExecuteChanged(CommandReset);
+						RaiseCanExecuteChanged(CommandDelete);
 					}
 				});
 		}

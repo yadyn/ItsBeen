@@ -121,7 +121,7 @@
     <value>Confirm Delete</value>
   </data>
   <data name="ConfirmItemDeleteContent" xml:space="preserve">
-    <value>Tap OK to delete the selected timer.</value>
+    <value>Tap OK to delete the timer '{0}'.</value>
   </data>
   <data name="ConfirmResetAllCaption" xml:space="preserve">
     <value>Confirm Reset All</value>

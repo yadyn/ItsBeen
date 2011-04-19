@@ -1,15 +1,17 @@
 ﻿<UserControl
+	x:Class="ItsBeen.Phone.Views.FilterListView"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:controls="clr-namespace:ItsBeen.Phone.Controls"
+	xmlns:compMod="clr-namespace:System.ComponentModel;assembly=System.Windows"
 	xmlns:Custom="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 	xmlns:gcmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP7"
 	mc:Ignorable="d"
-	x:Class="ItsBeen.Phone.Views.AllListView"
 	d:DesignWidth="456" d:DesignHeight="639"
 	d:DataContext="{d:DesignData Source=../DesignData/DesignerListViewModel.xaml}">
+
 	<UserControl.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
@@ -17,16 +19,22 @@
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
 	</UserControl.Resources>
+
 	<Grid x:Name="LayoutRoot" Background="Transparent">
-		<controls:FluidListBox x:Name="ItemsList" ItemsSource="{Binding Items}" ListAnimationInterval="100">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+
+		<controls:FluidListBox x:Name="ItemsList" Grid.Row="1" ItemsSource="{Binding Items, Mode=OneWay}" ListAnimationInterval="100">
 			<ListBox.ItemContainerStyle>
-				<StaticResource ResourceKey="ListBoxItemStyle"/>
+				<StaticResource ResourceKey="FluidListBoxItemStyle"/>
 			</ListBox.ItemContainerStyle>
 			<ListBox.ItemTemplate>
-				<StaticResource ResourceKey="DataTemplate"/>
+				<StaticResource ResourceKey="FluidListBoxItemTemplate"/>
 			</ListBox.ItemTemplate>
 			<ListBox.ItemsPanel>
-				<StaticResource ResourceKey="ItemsPanelTemplate"/>
+				<StaticResource ResourceKey="FluidListBoxItemsPanelTemplate"/>
 			</ListBox.ItemsPanel>
 			<Custom:Interaction.Triggers>
 				<Custom:EventTrigger EventName="SelectionChanged">

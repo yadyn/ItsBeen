@@ -4,15 +4,16 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:views="clr-namespace:ItsBeen.Phone.Views"
-	mc:Ignorable="d"
-	xmlns:ic="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions">
-	<ItemsPanelTemplate x:Key="ItemsPanelTemplate">
+	xmlns:ic="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions"
+	mc:Ignorable="d">
+
+	<ItemsPanelTemplate x:Key="FluidListBoxItemsPanelTemplate">
 		<StackPanel />
 	</ItemsPanelTemplate>
-	<DataTemplate x:Key="DataTemplate">
+	<DataTemplate x:Key="FluidListBoxItemTemplate">
 		<views:ItemView DataContext="{Binding}" />
 	</DataTemplate>
-	<Style x:Key="ListBoxItemStyle" TargetType="ListBoxItem">
+	<Style x:Key="FluidListBoxItemStyle" TargetType="ListBoxItem">
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="ListBoxItem">

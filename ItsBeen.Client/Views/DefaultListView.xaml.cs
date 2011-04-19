@@ -14,11 +14,11 @@ using System.Windows.Shapes;
 namespace ItsBeen.Client.Views
 {
 	/// <summary>
-	/// Interaction logic for AllListView.xaml
+	/// Interaction logic for DefaultListView.xaml
 	/// </summary>
-	public partial class AllListView : UserControl
+	public partial class DefaultListView : UserControl
 	{
-		public AllListView()
+		public DefaultListView()
 		{
 			this.InitializeComponent();
 		}

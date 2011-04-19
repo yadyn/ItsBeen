@@ -121,7 +121,7 @@
     <value>Delete Timer</value>
   </data>
   <data name="ConfirmItemDeleteContent" xml:space="preserve">
-    <value>Are you sure you want to permanently delete the selected timer?</value>
+    <value>Are you sure you want to permanently delete timer '{0}'?</value>
   </data>
   <data name="ConfirmResetAllCaption" xml:space="preserve">
     <value>Reset All Timers</value>

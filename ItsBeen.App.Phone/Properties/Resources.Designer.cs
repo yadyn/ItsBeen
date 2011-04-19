@@ -70,7 +70,7 @@ namespace ItsBeen.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tap OK to delete the selected timer..
+        ///   Looks up a localized string similar to Tap OK to delete the timer &apos;{0}&apos;..
         /// </summary>
         internal static string ConfirmItemDeleteContent {
             get {
