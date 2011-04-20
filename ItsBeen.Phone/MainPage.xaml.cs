@@ -94,7 +94,6 @@ namespace ItsBeen.Phone
 		{
 			if (ViewModel != null)
 			{
-				NavigationService.Navigate(new Uri("/Views/EditItemView.xaml", UriKind.Relative));
 				ViewModel.CommandEdit.Execute(null);
 			}
 		}

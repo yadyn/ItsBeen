@@ -19,6 +19,7 @@ namespace ItsBeen.Client
 		{
 			container.Register<IMessageBoxService>(c => new TaskDialogService());
 			container.Register<ITaskDialogService>(c => new TaskDialogService());
+			container.Register<INavigationService>(c => new NavigationService());
 
 			container.Register<IEnumerable<object>>("MainListViews", c =>
 				{

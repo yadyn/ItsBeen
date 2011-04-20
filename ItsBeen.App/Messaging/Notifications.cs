@@ -9,6 +9,7 @@ namespace ItsBeen.App.Messaging
 		public static readonly string NotifyItemReset = Guid.NewGuid().ToString();
 		public static readonly string NotifyItemDeleted = Guid.NewGuid().ToString();
 		public static readonly string NotifyItemSelected = Guid.NewGuid().ToString();
+		public static readonly string NotifyItemEdited = Guid.NewGuid().ToString();
 		public static readonly string NotifyResetAll = Guid.NewGuid().ToString();
 	}
 }

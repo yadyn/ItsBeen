@@ -66,6 +66,7 @@
     </Compile>
     <Compile Include="Services\IItemService.cs" />
     <Compile Include="Services\IMessageBoxService.cs" />
+    <Compile Include="Services\INavigationService.cs" />
     <Compile Include="Services\InMemoryItemService.cs" />
     <Compile Include="Services\IsolatedStorageItemService.cs" />
     <Compile Include="ViewModels\AppViewModel.cs" />

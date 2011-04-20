@@ -26,7 +26,8 @@ namespace ItsBeen.App
 				new MainViewModel(
 					c.ResolveNamed<IEnumerable<object>>("MainListViews"),
 					c.Resolve<IMessageBoxService>(),
-					c.Resolve<IItemService>()));
+					c.Resolve<IItemService>(),
+					c.Resolve<INavigationService>()));
 			container.Register(c => new EditItemViewModel());
 		}
 	}

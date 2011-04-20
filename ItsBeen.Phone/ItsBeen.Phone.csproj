@@ -95,6 +95,7 @@
     <Compile Include="PhoneFunqlet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\MessageBoxService.cs" />
+    <Compile Include="Services\NavigationService.cs" />
     <Compile Include="TiltEffect.cs" />
     <Compile Include="Views\FilterListView.xaml.cs">
       <DependentUpon>FilterListView.xaml</DependentUpon>

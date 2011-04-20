@@ -76,6 +76,9 @@
     <Compile Include="..\ItsBeen.App\Services\IMessageBoxService.cs">
       <Link>Services\IMessageBoxService.cs</Link>
     </Compile>
+    <Compile Include="..\ItsBeen.App\Services\INavigationService.cs">
+      <Link>Services\INavigationService.cs</Link>
+    </Compile>
     <Compile Include="..\ItsBeen.App\Services\InMemoryItemService.cs">
       <Link>Services\InMemoryItemService.cs</Link>
     </Compile>

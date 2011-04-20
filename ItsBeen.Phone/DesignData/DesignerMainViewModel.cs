@@ -14,7 +14,7 @@ namespace ItsBeen.Phone.DesignData
 	internal class DesignerMainViewModel : MainViewModel
 	{
 		public DesignerMainViewModel()
-			: base(new DesignerListViews(), new MessageBoxService(), new InMemoryItemService())
+			: base(new DesignerListViews(), new MessageBoxService(), new InMemoryItemService(), new NavigationService())
 		{
 		}
 
@@ -22,7 +22,7 @@ namespace ItsBeen.Phone.DesignData
 		{
 			private readonly IItemService itemService = new InMemoryItemService();
 
-			public DesignerListViews ()
+			public DesignerListViews()
 			{
 				Control control = null;
 

@@ -21,6 +21,7 @@ namespace ItsBeen.App.ViewModels
 	{
 		private readonly IMessageBoxService _messageBoxService;
 		private readonly IItemService _itemService;
+		private readonly INavigationService _navigationService;
 		private readonly ObservableCollection<object> _listViews;
 
 		private object _activeListView;
@@ -39,16 +40,19 @@ namespace ItsBeen.App.ViewModels
 		/// <param name="filterListView">The filter list view.</param>
 		/// <param name="messageBoxService">A message box service.</param>
 		/// <param name="itemService">An item service.</param>
-		public MainViewModel(IEnumerable<object> listViews,
-			IMessageBoxService messageBoxService, IItemService itemService)
+		public MainViewModel(IEnumerable<object> listViews, IMessageBoxService messageBoxService,
+			IItemService itemService, INavigationService navigationService)
 		{
 			if (messageBoxService == null)
 				throw new ArgumentNullException("messageBoxService");
 			if (itemService == null)
 				throw new ArgumentNullException("itemService");
+			if (navigationService == null)
+				throw new ArgumentNullException("navigationService");
 
 			_messageBoxService = messageBoxService;
 			_itemService = itemService;
+			_navigationService = navigationService;
 
 			_listViews = new ObservableCollection<object>();
 
@@ -135,8 +139,8 @@ namespace ItsBeen.App.ViewModels
 				{
 					_commandEdit = new RelayCommand(() =>
 					{
-						// TODO
-						//Messenger.Default.Send(new NotificationMessage(this, CommandContext.SelectedItem.Item, Commands.EditItem));
+						_navigationService.ShowEdit(ActiveListViewModel.SelectedItem.Item);
+						Messenger.Default.Send(new NotificationMessage<ItemModel>(this, ActiveListViewModel.SelectedItem.Item, Notifications.NotifyItemEdited));
 					}, () => IsItemSelected);
 				}
 				return _commandEdit;

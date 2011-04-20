@@ -185,7 +185,7 @@ namespace ItsBeen.App.ViewModels
 			Messenger.Default.Register<NotificationMessage<ItemModel>>(this,
 				message =>
 				{
-					if (message.Notification == Commands.EditItem)
+					if (message.Notification == Notifications.NotifyItemEdited)
 					{
 						item = message.Content;
 						RaisePropertyChanged(ItemPropertyName);

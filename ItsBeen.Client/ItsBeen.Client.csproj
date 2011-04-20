@@ -116,6 +116,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\EditItemWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\FilterListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -140,10 +144,14 @@
     <Compile Include="Messaging\TaskDialogMessage.cs" />
     <Compile Include="Services\DialogHelper.cs" />
     <Compile Include="Services\ITaskDialogService.cs" />
+    <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\TaskDialogService.cs" />
     <Compile Include="SingleInstance.cs" />
     <Compile Include="Views\DefaultListView.xaml.cs">
       <DependentUpon>DefaultListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EditItemWindow.xaml.cs">
+      <DependentUpon>EditItemWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\FilterListView.xaml.cs">
       <DependentUpon>FilterListView.xaml</DependentUpon>

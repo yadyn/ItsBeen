@@ -100,6 +100,7 @@ namespace ItsBeen.Phone
 			// screen to remain active until the application is ready to render.
 			RootFrame = new PhoneApplicationFrame();
 			RootFrame.Navigated += CompleteInitializePhoneApplication;
+			RootFrame.Navigated += UpdateNavigationServiceReference;
 
 			// Handle navigation failures
 			RootFrame.NavigationFailed += RootFrame_NavigationFailed;
@@ -117,6 +118,11 @@ namespace ItsBeen.Phone
 
 			// Remove this handler since it is no longer needed
 			RootFrame.Navigated -= CompleteInitializePhoneApplication;
+		}
+		private void UpdateNavigationServiceReference(object sender, NavigationEventArgs e)
+		{
+			if (e.Content is Page)
+				ItsBeen.Phone.Services.NavigationService.Service = ((Page)e.Content).NavigationService;
 		}
 
 		#endregion

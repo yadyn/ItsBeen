@@ -14,7 +14,7 @@ namespace ItsBeen.Client.DesignData
 	internal class DesignerMainViewModel : MainViewModel
 	{
 		public DesignerMainViewModel()
-			: base(new DesignerListViews(), new TaskDialogService(), new InMemoryItemService())
+			: base(new DesignerListViews(), new TaskDialogService(), new InMemoryItemService(), new NavigationService())
 		{
 		}
 
