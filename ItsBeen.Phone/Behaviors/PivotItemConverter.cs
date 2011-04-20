@@ -21,7 +21,10 @@ namespace ItsBeen.Phone.Behaviors
 				PivotItem pvItem = new PivotItem();
 				pvItem.Content = obj;
 				if (obj is Control)
+				{
+					pvItem.DataContext = (obj as Control).DataContext;
 					pvItem.Header = (obj as Control).DataContext;
+				}
 				newValues.Add(pvItem);
 			}
 
