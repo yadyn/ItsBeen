@@ -47,7 +47,7 @@ namespace ItsBeen.App.ViewModels
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ItemViewModel"/> class.
 		/// </summary>
-		/// <param name="item">The item model to work with.</param>
+		/// <param name="_item">The _item model to work with.</param>
 		public ItemViewModel(ItemModel item) : this()
 		{
 			this.item = item;

@@ -23,7 +23,7 @@ namespace ItsBeen.App.ViewModels
 		private static readonly string LastUpdatedPropertyName = "LastUpdated";
 		private static readonly string CreatedPropertyName = "Created";
 
-		private ItemModel item;
+		private ItemModel _item;
 
 		private ICommand commandSave;
 		private ICommand commandDelete;
@@ -36,29 +36,15 @@ namespace ItsBeen.App.ViewModels
 			RegisterForMessages();
 		}
 
-		public string PageName
-		{
-			get
-			{
-				return "Edit Timer";
-			}
-		}
-		public ItemModel Item
-		{
-			get
-			{
-				return item;
-			}
-		}
 		public string Name
 		{
 			get
 			{
-				return item == null ? NamePropertyName : item.Name;
+				return _item.Name;
 			}
 			set
 			{
-				item.Name = value;
+				_item.Name = value;
 				RaisePropertyChanged(NamePropertyName);
 			}
 		}
@@ -66,11 +52,11 @@ namespace ItsBeen.App.ViewModels
 		{
 			get
 			{
-				return item == null ? DescriptionPropertyName : item.Description;
+				return _item.Description;
 			}
 			set
 			{
-				item.Description = value;
+				_item.Description = value;
 				RaisePropertyChanged(DescriptionPropertyName);
 			}
 		}
@@ -78,16 +64,11 @@ namespace ItsBeen.App.ViewModels
 		{
 			get
 			{
-				if (item == null)
-				{
-					return (IsInDesignMode) ? DateTime.Now.AddTicks(((TimeSpan.TicksPerDay * 397) + TimeSpan.TicksPerHour + TimeSpan.TicksPerMinute + TimeSpan.TicksPerSecond) * -1) : DateTime.Now;
-				}
-				else
-					return item.LastUpdated;
+				return _item.LastUpdated;
 			}
 			private set
 			{
-				item.LastUpdated = value;
+				_item.LastUpdated = value;
 				RaisePropertyChanged(LastUpdatedPropertyName);
 			}
 		}
@@ -95,16 +76,11 @@ namespace ItsBeen.App.ViewModels
 		{
 			get
 			{
-				if (item == null)
-				{
-					return (IsInDesignMode) ? DateTime.Now.AddTicks(TimeSpan.TicksPerDay * -400) : DateTime.Now;
-				}
-				else
-					return item.Created;
+				return _item.Created;
 			}
 			set
 			{
-				item.Created = value;
+				_item.Created = value;
 				RaisePropertyChanged(CreatedPropertyName);
 			}
 		}
@@ -122,34 +98,6 @@ namespace ItsBeen.App.ViewModels
 				return 40;
 			}
 		}
-		public string NameLabel
-		{
-			get
-			{
-				return "Name";
-			}
-		}
-		public string DescriptionLabel
-		{
-			get
-			{
-				return "Description";
-			}
-		}
-		public string LastUpdatedLabel
-		{
-			get
-			{
-				return "Last Set";
-			}
-		}
-		public string CreatedLabel
-		{
-			get
-			{
-				return "Created";
-			}
-		}
 
 		public ICommand CommandSave
 		{
@@ -159,7 +107,7 @@ namespace ItsBeen.App.ViewModels
 				{
 					commandSave = new RelayCommand(() =>
 					{
-						Messenger.Default.Send(new NotificationMessage<ItemModel>(this, Item, Notifications.NotifyItemSaved));
+						Messenger.Default.Send(new NotificationMessage<ItemModel>(this, _item, Notifications.NotifyItemSaved));
 					});
 				}
 				return commandSave;
@@ -173,7 +121,7 @@ namespace ItsBeen.App.ViewModels
 				{
 					commandDelete = new RelayCommand(() =>
 					{
-						Messenger.Default.Send(new NotificationMessage<ItemModel>(this, Item, Commands.DeleteItem));
+						Messenger.Default.Send(new NotificationMessage<ItemModel>(this, _item, Commands.DeleteItem));
 					});
 				}
 				return commandDelete;
@@ -187,7 +135,7 @@ namespace ItsBeen.App.ViewModels
 				{
 					if (message.Notification == Notifications.NotifyItemEdited)
 					{
-						item = message.Content;
+						_item = message.Content;
 						RaisePropertyChanged(ItemPropertyName);
 						RaisePropertyChanged(NamePropertyName);
 						RaisePropertyChanged(DescriptionPropertyName);

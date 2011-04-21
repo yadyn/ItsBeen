@@ -39,7 +39,7 @@ namespace ItsBeen.App.ViewModels
 		/// <param name="defaultListView">The default list view.</param>
 		/// <param name="filterListView">The filter list view.</param>
 		/// <param name="messageBoxService">A message box service.</param>
-		/// <param name="itemService">An item service.</param>
+		/// <param name="itemService">An _item service.</param>
 		public MainViewModel(IEnumerable<object> listViews, IMessageBoxService messageBoxService,
 			IItemService itemService, INavigationService navigationService)
 		{

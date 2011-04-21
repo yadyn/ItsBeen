@@ -14,35 +14,36 @@
 	Title="{Binding ApplicationName, Mode=OneWay}"
 	ResizeMode="CanMinimize">
 
-	<Grid x:Name="LayoutRoot">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="Auto"/>
-		</Grid.RowDefinitions>
-		<TabControl x:Name="TabRoot" ItemsSource="{Binding ListViews}" SelectedItem="{Binding ActiveListView, Mode=TwoWay}">
-			<TabControl.ItemContainerStyle>
-				<Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource {x:Type TabItem}}">
-					<Setter Property="Header" Value="{Binding DataContext.ListType}"/>
-					<Setter Property="Content" Value="{Binding}"/>
-				</Style>
-			</TabControl.ItemContainerStyle>
-		</TabControl>
-		<Border Grid.Row="1" Padding="4" BorderBrush="{DynamicResource GrayBrush1}" BorderThickness="0,1,0,0">
-			<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-				<Button x:Name="AddButton" Margin="4" Padding="0" ToolTip="Add" Command="{Binding CommandAdd, Mode=OneWay}">
-					<Image Source="/ItsBeen.Client;component/Resources/Icons48/appbar.new.rest.png"/>
-				</Button>
-				<Button x:Name="EditButton" Margin="4" Padding="0" ToolTip="Edit" Command="{Binding CommandEdit, Mode=OneWay}">
-					<Image Source="/ItsBeen.Client;component/Resources/Icons48/appbar.edit.rest.png"/>
-				</Button>
-				<Button x:Name="ResetButton" Margin="4" Padding="0" ToolTip="Reset" Command="{Binding CommandReset, Mode=OneWay}">
-					<Image Source="/ItsBeen.Client;component/Resources/Icons48/appbar.refresh.rest.png"/>
-				</Button>
-				<Button x:Name="DeleteButton" Margin="4" Padding="0" ToolTip="Delete" Command="{Binding CommandDelete, Mode=OneWay}">
-					<Image Source="/ItsBeen.Client;component/Resources/Icons48/appbar.delete.rest.png"/>
-				</Button>
-			</StackPanel>
-		</Border>
-	</Grid>
-	
+	<Border x:Name="LayoutRoot" Padding="8">
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
+			<TabControl x:Name="TabRoot" ItemsSource="{Binding ListViews}" SelectedItem="{Binding ActiveListView, Mode=TwoWay}">
+				<TabControl.ItemContainerStyle>
+					<Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource {x:Type TabItem}}">
+						<Setter Property="Header" Value="{Binding DataContext.ListType}"/>
+						<Setter Property="Content" Value="{Binding}"/>
+					</Style>
+				</TabControl.ItemContainerStyle>
+			</TabControl>
+			<Border Grid.Row="1" Padding="4" BorderBrush="{DynamicResource GrayBrush1}" BorderThickness="0,1,0,0">
+				<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+					<Button x:Name="AddButton" Margin="4" Padding="0" ToolTip="Add" Command="{Binding CommandAdd, Mode=OneWay}">
+						<Image Source="/ItsBeen.Client;component/Resources/Icons48/appbar.new.rest.png"/>
+					</Button>
+					<Button x:Name="EditButton" Margin="4" Padding="0" ToolTip="Edit" Command="{Binding CommandEdit, Mode=OneWay}">
+						<Image Source="/ItsBeen.Client;component/Resources/Icons48/appbar.edit.rest.png"/>
+					</Button>
+					<Button x:Name="ResetButton" Margin="4" Padding="0" ToolTip="Reset" Command="{Binding CommandReset, Mode=OneWay}">
+						<Image Source="/ItsBeen.Client;component/Resources/Icons48/appbar.refresh.rest.png"/>
+					</Button>
+					<Button x:Name="DeleteButton" Margin="4" Padding="0" ToolTip="Delete" Command="{Binding CommandDelete, Mode=OneWay}">
+						<Image Source="/ItsBeen.Client;component/Resources/Icons48/appbar.delete.rest.png"/>
+					</Button>
+				</StackPanel>
+			</Border>
+		</Grid>
+	</Border>
 </Window>

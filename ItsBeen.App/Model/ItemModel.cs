@@ -28,7 +28,7 @@ namespace ItsBeen.App.Model
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ItemModel"/> class.
 		/// </summary>
-		/// <param name="name">The name to initialize this item with.</param>
+		/// <param name="name">The name to initialize this _item with.</param>
 		public ItemModel(string name)
 			: this()
 		{

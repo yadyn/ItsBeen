@@ -7,10 +7,10 @@ using ItsBeen.App.Model;
 namespace ItsBeen.App.Services
 {
 	/// <summary>
-	/// A simple in-memory item service.
+	/// A simple in-memory _item service.
 	/// </summary>
 	/// <remarks>
-	/// This item service does not provide any persistence between runs.
+	/// This _item service does not provide any persistence between runs.
 	/// It is mostly useful for testing against.
 	/// </remarks>
 	public class InMemoryItemService : IItemService

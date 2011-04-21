@@ -32,7 +32,7 @@ namespace ItsBeen.App.ViewModels
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ListViewModel"/> class.
 		/// </summary>
-		/// <param name="itemService">An item service.</param>
+		/// <param name="itemService">An _item service.</param>
 		public ListViewModel(string listType, IItemService itemService)
 		{
 			if (itemService == null)
@@ -41,7 +41,7 @@ namespace ItsBeen.App.ViewModels
 			this._itemService = itemService;
 			this._listType = listType;
 
-			// Must initialize ticker BEFORE building item collection!
+			// Must initialize ticker BEFORE building _item collection!
 			ticker = new System.Windows.Threading.DispatcherTimer();
 			ticker.Interval = new TimeSpan(TimeSpan.TicksPerSecond); // 1 second interval
 			ticker.Tick += ItemViewModel.HandleTick; // register to static handler

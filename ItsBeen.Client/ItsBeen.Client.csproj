@@ -92,6 +92,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </DesignData>
+    <DesignData Include="DesignData\DesignerEditItemViewModel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </DesignData>
     <Page Include="Skins\Brushes.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -140,6 +144,9 @@
     <Compile Include="ClientFunqlet.cs" />
     <Compile Include="Common\GeneralConverters.cs" />
     <Compile Include="Common\TimeSinceConverter.cs" />
+    <Compile Include="Controls\Form.cs" />
+    <Compile Include="Controls\FormHeader.cs" />
+    <Compile Include="Controls\FormItem.cs" />
     <Compile Include="DesignData\DesignerMainViewModel.cs" />
     <Compile Include="Messaging\TaskDialogMessage.cs" />
     <Compile Include="Services\DialogHelper.cs" />

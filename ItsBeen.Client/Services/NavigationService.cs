@@ -11,6 +11,9 @@ namespace ItsBeen.Client.Services
 	{
 		public void ShowEdit(ItsBeen.App.Model.ItemModel item)
 		{
+			EditItemWindow window = new EditItemWindow();
+			window.Owner = System.Windows.Application.Current.MainWindow;
+			window.ShowDialog();
 		}
 	}
 }
