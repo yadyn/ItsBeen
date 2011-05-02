@@ -6,18 +6,19 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:controls="clr-namespace:ItsBeen.Client.Controls"
 	mc:Ignorable="d"
-	d:DesignWidth="300" d:DesignHeight="300"
 	d:DataContext="{d:DesignData Source=../DesignData/DesignerEditItemViewModel.xaml}"
 	DataContext="{Binding EditItem, Source={StaticResource Locator}}"
+	Width="300"
 	ResizeMode="NoResize"
 	ShowInTaskbar="False"
 	WindowStartupLocation="CenterOwner"
-	SizeToContent="WidthAndHeight"
+	SizeToContent="Height"
 	Icon="{x:Null}">
 
 	<Border x:Name="LayoutRoot" Padding="8">
 	    <Grid>
 			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
 				<RowDefinition Height="Auto"/>
 				<RowDefinition Height="Auto"/>
 			</Grid.RowDefinitions>
@@ -30,7 +31,7 @@
 				</controls:Form.Resources>
 	    		<controls:FormHeader>
 	    			<StackPanel Orientation="Horizontal">
-	    				<Image Source="/ItsBeen.Client;component/Resources/Icons48/appbar.edit.rest.png"/>
+	    				<Image Source="/ItsBeen.Client;component/Resources/Icons48/appbar.edit.rest.png" Opacity="0.5"/>
 						<TextBlock Text="Edit Timer" FontSize="16" VerticalAlignment="Center"/>
 					</StackPanel>
 				</controls:FormHeader>
@@ -48,6 +49,16 @@
 				<Label Content="_Last Set"/>
 				<TextBlock Text="{Binding LastUpdated, Mode=OneWay}"/>
 			</StackPanel>
+			<Border Grid.Row="2" Padding="4" BorderBrush="{DynamicResource GrayBrush1}" BorderThickness="0,1,0,0">
+				<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+					<Button x:Name="SaveButton" Margin="4" Padding="0" ToolTip="Save" Command="{Binding CommandSave, Mode=OneWay}" Click="SaveButton_Click">
+						<Image Source="/ItsBeen.Client;component/Resources/Icons48/appbar.save.rest.png"/>
+					</Button>
+					<Button x:Name="DeleteButton" Margin="4" Padding="0" ToolTip="Delete" Command="{Binding CommandDelete, Mode=OneWay}" Click="DeleteButton_Click">
+						<Image Source="/ItsBeen.Client;component/Resources/Icons48/appbar.delete.rest.png"/>
+					</Button>
+				</StackPanel>
+			</Border>
 	    </Grid>
 	</Border>
 </Window>

@@ -23,6 +23,9 @@ namespace ItsBeen.App.ViewModels
 		private static readonly string LastUpdatedPropertyName = "LastUpdated";
 		private static readonly string CreatedPropertyName = "Created";
 
+		private readonly IMessageBoxService _messageBoxService;
+		private readonly IItemService _itemService;
+
 		private ItemModel _item;
 
 		private ICommand commandSave;
@@ -31,8 +34,18 @@ namespace ItsBeen.App.ViewModels
 		/// <summary>
 		/// Initializes a new instance of the EditItemViewModel class.
 		/// </summary>
-		public EditItemViewModel()
+		/// <param name="messageBoxService">A message box service.</param>
+		/// <param name="itemService">An item service.</param>
+		public EditItemViewModel(IMessageBoxService messageBoxService, IItemService itemService)
 		{
+			if (messageBoxService == null)
+				throw new ArgumentNullException("messageBoxService");
+			if (itemService == null)
+				throw new ArgumentNullException("itemService");
+
+			_messageBoxService = messageBoxService;
+			_itemService = itemService;
+
 			RegisterForMessages();
 		}
 
@@ -108,6 +121,7 @@ namespace ItsBeen.App.ViewModels
 					commandSave = new RelayCommand(() =>
 					{
 						Messenger.Default.Send(new NotificationMessage<ItemModel>(this, _item, Notifications.NotifyItemSaved));
+						_itemService.SaveItems();
 					});
 				}
 				return commandSave;
@@ -121,7 +135,25 @@ namespace ItsBeen.App.ViewModels
 				{
 					commandDelete = new RelayCommand(() =>
 					{
-						Messenger.Default.Send(new NotificationMessage<ItemModel>(this, _item, Commands.DeleteItem));
+						DialogMessage message = new DialogMessage(this,
+							String.Format(Properties.Resources.ConfirmItemDeleteContent, _item.Name),
+							result =>
+							{
+								if (result == System.Windows.MessageBoxResult.OK || result == System.Windows.MessageBoxResult.Yes)
+								{
+									_itemService.DeleteItem(_item);
+									Messenger.Default.Send(new NotificationMessage<ItemModel>(this, _item, Notifications.NotifyItemDeleted));
+								}
+							});
+						message.Caption = Properties.Resources.ConfirmItemDeleteCaption;
+#if WINDOWS_PHONE
+						message.Button = System.Windows.MessageBoxButton.OKCancel;
+#else
+						message.Button = System.Windows.MessageBoxButton.YesNo;
+						message.DefaultResult = System.Windows.MessageBoxResult.No;
+						message.Icon = System.Windows.MessageBoxImage.Question;
+#endif
+						_messageBoxService.ShowMessageBox(message);
 					});
 				}
 				return commandDelete;

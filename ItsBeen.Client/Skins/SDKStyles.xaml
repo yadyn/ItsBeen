@@ -1198,7 +1198,6 @@
                                         <ColorAnimationUsingKeyFrames Storyboard.TargetName="ControlColor" Storyboard.TargetProperty="Color">
                                             <EasingColorKeyFrame KeyTime="0" Value="{StaticResource Gray7}"/>
                                         </ColorAnimationUsingKeyFrames>
-
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
@@ -1231,10 +1230,11 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="2" Padding="{TemplateBinding Padding}">
-                            <ContentControl x:Name="ContentControl" Cursor="{TemplateBinding Cursor}" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" FontWeight="{TemplateBinding FontWeight}" FontStretch="{TemplateBinding FontStretch}" FontSize="{TemplateBinding FontSize}" FontFamily="{TemplateBinding FontFamily}" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" IsTabStop="False" VerticalAlignment="{TemplateBinding VerticalAlignment}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <ContentControl x:Name="ContentControl" Cursor="{TemplateBinding Cursor}" ContentTemplate="{TemplateBinding ContentTemplate}" FontWeight="{TemplateBinding FontWeight}" FontStretch="{TemplateBinding FontStretch}" FontSize="{TemplateBinding FontSize}" FontFamily="{TemplateBinding FontFamily}" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" IsTabStop="False" VerticalAlignment="{TemplateBinding VerticalAlignment}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
                                 <ContentControl.Foreground>
                                     <SolidColorBrush x:Name="ControlColor" Color="{StaticResource BlackColor}" />
                                 </ContentControl.Foreground>
+								<ContentPresenter Content="{TemplateBinding Content}" RecognizesAccessKey="True"/>
                             </ContentControl>
                         </Border>
                     </Grid>

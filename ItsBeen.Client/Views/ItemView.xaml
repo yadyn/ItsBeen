@@ -16,7 +16,7 @@
 
 	<StackPanel x:Name="LayoutRoot">
 		<TextBlock Text="{Binding Name}" VerticalAlignment="Center" FontSize="18.667"/>
-		<TextBlock Text="{Binding Description}" VerticalAlignment="Center" FontSize="16" Visibility="{Binding Description, Converter={StaticResource NotNullOrEmptyVisibilityConverter}}"/>
+		<TextBlock Text="{Binding Description}" VerticalAlignment="Center" FontSize="16" Visibility="{Binding Description, Converter={StaticResource NotNullOrEmptyVisibilityConverter}}" Opacity="0.75" />
 		<TextBlock x:Name="TimeSinceBlock" Text="{Binding TimeSince, Converter={StaticResource TimeSinceConverter}, Mode=OneWay}" VerticalAlignment="Center" FontSize="13.333"/>
 	</StackPanel>
 </UserControl>

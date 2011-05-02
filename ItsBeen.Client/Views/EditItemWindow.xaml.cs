@@ -14,5 +14,14 @@ namespace ItsBeen.Client
         {
             InitializeComponent();
         }
+
+		private void SaveButton_Click(object sender, RoutedEventArgs e)
+		{
+			Close();
+		}
+		private void DeleteButton_Click(object sender, RoutedEventArgs e)
+		{
+			Close();
+		}
     }
 }

@@ -36,10 +36,10 @@ namespace ItsBeen.App.ViewModels
 		/// <summary>
 		/// Initializes a new instance of the MainViewModel class.
 		/// </summary>
-		/// <param name="defaultListView">The default list view.</param>
-		/// <param name="filterListView">The filter list view.</param>
+		/// <param name="listViews">A list of views to display.</param>
 		/// <param name="messageBoxService">A message box service.</param>
-		/// <param name="itemService">An _item service.</param>
+		/// <param name="itemService">An item service.</param>
+		/// <param name="navigationService">A navigation service.</param>
 		public MainViewModel(IEnumerable<object> listViews, IMessageBoxService messageBoxService,
 			IItemService itemService, INavigationService navigationService)
 		{
@@ -139,8 +139,8 @@ namespace ItsBeen.App.ViewModels
 				{
 					_commandEdit = new RelayCommand(() =>
 					{
-						_navigationService.ShowEdit(ActiveListViewModel.SelectedItem.Item);
 						Messenger.Default.Send(new NotificationMessage<ItemModel>(this, ActiveListViewModel.SelectedItem.Item, Notifications.NotifyItemEdited));
+						_navigationService.ShowEdit(ActiveListViewModel.SelectedItem.Item);
 					}, () => IsItemSelected);
 				}
 				return _commandEdit;

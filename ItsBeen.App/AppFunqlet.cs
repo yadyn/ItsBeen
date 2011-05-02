@@ -28,7 +28,10 @@ namespace ItsBeen.App
 					c.Resolve<IMessageBoxService>(),
 					c.Resolve<IItemService>(),
 					c.Resolve<INavigationService>()));
-			container.Register(c => new EditItemViewModel());
+			container.Register(c =>
+				new EditItemViewModel(
+					c.Resolve<IMessageBoxService>(),
+					c.Resolve<IItemService>()));
 		}
 	}
 }
