@@ -15,7 +15,7 @@ namespace ItsBeen.App.ViewModels
 	/// <summary>
 	/// This class contains properties that a View can data bind to.
 	/// </summary>
-	public class EditItemViewModel : AppViewModel
+	public class EditItemViewModel : AppViewModel, IRequestCloseViewModel
 	{
 		private static readonly string ItemPropertyName = "Item";
 		private static readonly string NamePropertyName = "Name";
@@ -120,8 +120,10 @@ namespace ItsBeen.App.ViewModels
 				{
 					commandSave = new RelayCommand(() =>
 					{
-						Messenger.Default.Send(new NotificationMessage<ItemModel>(this, _item, Notifications.NotifyItemSaved));
 						_itemService.SaveItems();
+						Messenger.Default.Send(new NotificationMessage<ItemModel>(this, _item, Notifications.NotifyItemSaved));
+
+						OnRequestClose(EventArgs.Empty);
 					});
 				}
 				return commandSave;
@@ -143,6 +145,8 @@ namespace ItsBeen.App.ViewModels
 								{
 									_itemService.DeleteItem(_item);
 									Messenger.Default.Send(new NotificationMessage<ItemModel>(this, _item, Notifications.NotifyItemDeleted));
+
+									OnRequestClose(EventArgs.Empty);
 								}
 							});
 						message.Caption = Properties.Resources.ConfirmItemDeleteCaption;
@@ -158,6 +162,21 @@ namespace ItsBeen.App.ViewModels
 				}
 				return commandDelete;
 			}
+		}
+
+		/// <summary>
+		/// Occurs when the ViewModel requests that the View close.
+		/// </summary>
+		public event EventHandler RequestClose;
+
+		/// <summary>
+		/// Raises the <see cref="E:RequestClose"/> event.
+		/// </summary>
+		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+		protected void OnRequestClose(EventArgs e)
+		{
+			if (RequestClose != null)
+				RequestClose(this, e);
 		}
 
 		private void RegisterForMessages()

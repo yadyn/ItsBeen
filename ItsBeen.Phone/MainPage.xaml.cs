@@ -12,9 +12,11 @@ using System.Windows.Shapes;
 
 using Microsoft.Phone.Controls;
 
+using ItsBeen.Phone.Controls;
+
 namespace ItsBeen.Phone
 {
-	public partial class MainPage : PhoneApplicationPage
+	public partial class MainPage : PageBase
 	{
 		private ItsBeen.App.ViewModels.MainViewModel ViewModel
 		{

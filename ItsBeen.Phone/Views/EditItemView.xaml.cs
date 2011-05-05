@@ -1,11 +1,13 @@
 ﻿using Microsoft.Phone.Controls;
 
+using ItsBeen.Phone.Controls;
+
 namespace ItsBeen.Phone.Views
 {
 	/// <summary>
 	/// Description for EditItemView.
 	/// </summary>
-	public partial class EditItemView : PhoneApplicationPage
+	public partial class EditItemView : PageBase
 	{
 		private ItsBeen.App.ViewModels.EditItemViewModel ViewModel
 		{
@@ -39,7 +41,6 @@ namespace ItsBeen.Phone.Views
 				Dispatcher.BeginInvoke(() =>
 					{
 						ViewModel.CommandSave.Execute(null);
-						NavigationService.GoBack();
 					});
 			}
 		}
@@ -52,13 +53,7 @@ namespace ItsBeen.Phone.Views
 		{
 			if (ViewModel != null)
 			{
-			    System.Windows.MessageBoxResult result = System.Windows.MessageBox.Show("Tap OK to delete this timer.", "Confirm Delete", System.Windows.MessageBoxButton.OKCancel);
-
-				if (result == System.Windows.MessageBoxResult.OK)
-				{
-					ViewModel.CommandDelete.Execute(null);
-					NavigationService.GoBack();
-				}
+				ViewModel.CommandDelete.Execute(null);
 			}
 		}
 	}

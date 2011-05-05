@@ -61,6 +61,9 @@
     <Compile Include="..\ItsBeen.App\AppFunqlet.cs">
       <Link>AppFunqlet.cs</Link>
     </Compile>
+    <Compile Include="..\ItsBeen.App\IRequestCloseViewModel.cs">
+      <Link>IRequestCloseViewModel.cs</Link>
+    </Compile>
     <Compile Include="..\ItsBeen.App\Messaging\Commands.cs">
       <Link>Messaging\Commands.cs</Link>
     </Compile>

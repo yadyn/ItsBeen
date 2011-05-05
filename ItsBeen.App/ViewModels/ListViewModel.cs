@@ -141,6 +141,7 @@ namespace ItsBeen.App.ViewModels
 						ItemViewModel itemVM = items.Where(i => i.Item.ID == message.Content.ID).FirstOrDefault();
 						if (itemVM != null)
 						{
+							SelectedItem = null;
 							items.Remove(itemVM);
 							itemVM.Cleanup();
 						}
@@ -150,6 +151,7 @@ namespace ItsBeen.App.ViewModels
 						ItemViewModel itemVM = items.Where(i => i.Item.ID == message.Content.ID).FirstOrDefault();
 						if (itemVM != null)
 						{
+							SelectedItem = null;
 							items[items.IndexOf(itemVM)] = new ItemViewModel(message.Content);
 							itemVM.Cleanup();
 							itemVM = null;

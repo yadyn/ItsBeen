@@ -1,42 +1,51 @@
-﻿<Window
+﻿<controls:WindowBase
 	x:Class="ItsBeen.Client.EditItemWindow"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:controls="clr-namespace:ItsBeen.Client.Controls"
+	xmlns:sys="clr-namespace:System;assembly=mscorlib"
 	mc:Ignorable="d"
 	d:DataContext="{d:DesignData Source=../DesignData/DesignerEditItemViewModel.xaml}"
 	DataContext="{Binding EditItem, Source={StaticResource Locator}}"
-	Width="300"
+	Width="300" Height="360"
 	ResizeMode="NoResize"
 	ShowInTaskbar="False"
 	WindowStartupLocation="CenterOwner"
-	SizeToContent="Height"
 	Icon="{x:Null}">
 
+	<controls:WindowBase.Resources>
+		<ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="AlignmentValues">
+			<ObjectDataProvider.MethodParameters>
+				<x:Type TypeName="HorizontalAlignment" />
+			</ObjectDataProvider.MethodParameters>
+		</ObjectDataProvider>
+	</controls:WindowBase.Resources>
+	
 	<Border x:Name="LayoutRoot" Padding="8">
 	    <Grid>
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="1*"/>
 				<RowDefinition Height="Auto"/>
 			</Grid.RowDefinitions>
 	    	<controls:Form x:Name="EditForm">
-	    		<controls:Form.Resources>
-	    			<Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
-	    				<Setter Property="controls:FormItem.LabelPosition" Value="Top"/>
-						<Setter Property="controls:FormItem.ContentHorizontalAlignment" Value="Stretch"/>
+	    		<controls:Form.ItemContainerStyle>
+	    			<Style TargetType="{x:Type controls:FormItem}" BasedOn="{StaticResource {x:Type controls:FormItem}}">
+	    				<Setter Property="LabelPosition" Value="Top"/>
+						<Setter Property="LabelPadding" Value="0,4,0,0"/>
+						<Setter Property="ContentHorizontalAlignment" Value="Stretch"/>
 					</Style>
-				</controls:Form.Resources>
-	    		<controls:FormHeader>
+				</controls:Form.ItemContainerStyle>
+				<controls:Form.Header>
 	    			<StackPanel Orientation="Horizontal">
 	    				<Image Source="/ItsBeen.Client;component/Resources/Icons48/appbar.edit.rest.png" Opacity="0.5"/>
 						<TextBlock Text="Edit Timer" FontSize="16" VerticalAlignment="Center"/>
 					</StackPanel>
-				</controls:FormHeader>
-				<TextBox controls:FormItem.LabelContent="_Name" Text="{Binding Name}" MaxLength="{Binding NameMaxLength, Mode=OneWay}"/>
-				<TextBox controls:FormItem.LabelContent="_Description" Text="{Binding Description}" MaxLength="{Binding DescriptionMaxLength, Mode=OneWay}"/>
+				</controls:Form.Header>
+				<TextBox controls:Form.LabelContent="_Name" Text="{Binding Name}" MaxLength="{Binding NameMaxLength, Mode=OneWay}"/>
+				<TextBox controls:Form.LabelContent="_Description" Text="{Binding Description}" MaxLength="{Binding DescriptionMaxLength, Mode=OneWay}"/>
 			</controls:Form>
 			<StackPanel x:Name="DetailsPanel" Grid.Row="1">
 				<StackPanel.Resources>
@@ -51,14 +60,14 @@
 			</StackPanel>
 			<Border Grid.Row="2" Padding="4" BorderBrush="{DynamicResource GrayBrush1}" BorderThickness="0,1,0,0">
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-					<Button x:Name="SaveButton" Margin="4" Padding="0" ToolTip="Save" Command="{Binding CommandSave, Mode=OneWay}" Click="SaveButton_Click">
+					<Button x:Name="SaveButton" Margin="4" Padding="0" ToolTip="Save" Command="{Binding CommandSave, Mode=OneWay}">
 						<Image Source="/ItsBeen.Client;component/Resources/Icons48/appbar.save.rest.png"/>
 					</Button>
-					<Button x:Name="DeleteButton" Margin="4" Padding="0" ToolTip="Delete" Command="{Binding CommandDelete, Mode=OneWay}" Click="DeleteButton_Click">
+					<Button x:Name="DeleteButton" Margin="4" Padding="0" ToolTip="Delete" Command="{Binding CommandDelete, Mode=OneWay}">
 						<Image Source="/ItsBeen.Client;component/Resources/Icons48/appbar.delete.rest.png"/>
 					</Button>
 				</StackPanel>
 			</Border>
 	    </Grid>
 	</Border>
-</Window>
+</controls:WindowBase>

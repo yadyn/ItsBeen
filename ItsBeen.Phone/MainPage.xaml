@@ -1,14 +1,15 @@
-﻿<phone:PhoneApplicationPage 
+﻿<controls:PageBase 
 	x:Class="ItsBeen.Phone.MainPage"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
 	xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-	xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+	xmlns:phonectrl="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:dd="clr-namespace:ItsBeen.Phone.DesignData"
 	xmlns:behaviors="clr-namespace:ItsBeen.Phone.Behaviors"
+	xmlns:controls="clr-namespace:ItsBeen.Phone.Controls"
 	xmlns:views="clr-namespace:ItsBeen.Phone.Views"
 	mc:Ignorable="d"
 	d:DesignWidth="480" d:DesignHeight="696"
@@ -20,22 +21,22 @@
 	SupportedOrientations="Portrait" Orientation="Portrait"
 	shell:SystemTray.IsVisible="True">
 
-	<phone:PhoneApplicationPage.Resources>
+	<controls:PageBase.Resources>
 		<ResourceDictionary>
 			 <behaviors:PivotItemConverter x:Key="PivotItemConverter"/>
 		</ResourceDictionary>
-	</phone:PhoneApplicationPage.Resources>
+	</controls:PageBase.Resources>
 
 	<Grid x:Name="LayoutRoot" Background="Transparent">
-		<controls:Pivot x:Name="PivotMenu" Title="{Binding ApplicationName, Mode=OneWay}" ItemsSource="{Binding ListViews, Converter={StaticResource PivotItemConverter}}" SelectedItem="{Binding ActiveListView, Mode=TwoWay}">
-			<controls:Pivot.HeaderTemplate>
+		<phonectrl:Pivot x:Name="PivotMenu" Title="{Binding ApplicationName, Mode=OneWay}" ItemsSource="{Binding ListViews, Converter={StaticResource PivotItemConverter}}" SelectedItem="{Binding ActiveListView, Mode=TwoWay}">
+			<phonectrl:Pivot.HeaderTemplate>
 				<DataTemplate>
 					<TextBlock Text="{Binding ListType}"/>
 				</DataTemplate>
-			</controls:Pivot.HeaderTemplate>
-		</controls:Pivot>
+			</phonectrl:Pivot.HeaderTemplate>
+		</phonectrl:Pivot>
 	</Grid>
-	<phone:PhoneApplicationPage.ApplicationBar>
+	<controls:PageBase.ApplicationBar>
 		<shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
 			<shell:ApplicationBar.MenuItems>
 				<shell:ApplicationBarMenuItem x:Name="menuResetAll" Text="Reset All Timers" Click="menuResetAll_Click"/>
@@ -45,5 +46,5 @@
 			<shell:ApplicationBarIconButton x:Name="buttonReset" IconUri="/icons/appbar.refresh.rest.png" Text="Reset" Click="buttonReset_Click" IsEnabled="False"/>
 			<shell:ApplicationBarIconButton x:Name="buttonDelete" IconUri="/icons/appbar.delete.rest.png" Text="Delete" Click="buttonDelete_Click" IsEnabled="False"/>
 		</shell:ApplicationBar>
-	</phone:PhoneApplicationPage.ApplicationBar>
-</phone:PhoneApplicationPage>
+	</controls:PageBase.ApplicationBar>
+</controls:PageBase>

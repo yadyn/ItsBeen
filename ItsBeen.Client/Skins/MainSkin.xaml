@@ -2,53 +2,71 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 					xmlns:controls="clr-namespace:ItsBeen.Client.Controls">
 	<Style TargetType="{x:Type controls:Form}" BasedOn="{StaticResource {x:Type ItemsControl}}">
-		<Setter Property="controls:FormItem.LabelPadding" Value="0" />
-		<Setter Property="controls:FormItem.ContentPadding" Value="0" />
-		<Setter Property="controls:FormItem.LabelWidth" Value="NaN" />
-	</Style>
-	<Style TargetType="{x:Type controls:FormHeader}">
+		<Setter Property="controls:Form.LabelPadding" Value="0" />
+		<Setter Property="controls:Form.ContentPadding" Value="0" />
+		<Setter Property="controls:Form.LabelWidth" Value="NaN" />
 		<Setter Property="Template">
 			<Setter.Value>
-				<ControlTemplate TargetType="{x:Type controls:FormHeader}">
-					<Border Background="{TemplateBinding Background}"
-							BorderBrush="{TemplateBinding BorderBrush}"
-							BorderThickness="{TemplateBinding BorderThickness}">
-						<ContentPresenter Content="{TemplateBinding Content}" />
+				<ControlTemplate TargetType="{x:Type controls:Form}">
+					<Border BorderThickness="{TemplateBinding Border.BorderThickness}"
+							Padding="{TemplateBinding Control.Padding}"
+							BorderBrush="{TemplateBinding Border.BorderBrush}"
+							Background="{TemplateBinding Panel.Background}"
+							SnapsToDevicePixels="True">
+						<Grid>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+							</Grid.RowDefinitions>
+							<ContentPresenter Grid.Row="0" ContentSource="Header"/>
+							<ItemsPresenter Grid.Row="1" SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+						</Grid>
 					</Border>
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
 	</Style>
-	<Style TargetType="{x:Type controls:FormItem}">
-		<Setter Property="Padding" Value="0" />
+	<Style TargetType="{x:Type controls:FormItem}" BasedOn="{StaticResource {x:Type ContentControl}}">
+		<Setter Property="LabelPadding" Value="{Binding Path=(controls:Form.LabelPadding)}"/>
+		<Setter Property="LabelVerticalAlignment" Value="{Binding Path=(controls:Form.LabelVerticalAlignment)}"/>
+		<Setter Property="LabelHorizontalContentAlignment" Value="{Binding Path=(controls:Form.LabelHorizontalContentAlignment)}"/>
+		<Setter Property="LabelPosition" Value="{Binding Path=(controls:Form.LabelPosition)}"/>
+		<Setter Property="LabelWidth" Value="{Binding Path=(controls:Form.LabelWidth)}"/>
+		<Setter Property="LabelContent" Value="{Binding Path=(controls:Form.LabelContent)}"/>
+		<Setter Property="LabelContentTemplate" Value="{Binding Path=(controls:Form.LabelContentTemplate)}"/>
+		<Setter Property="LabelContentTemplateSelector" Value="{Binding Path=(controls:Form.LabelContentTemplateSelector)}"/>
+		<Setter Property="ContentHorizontalAlignment" Value="{Binding Path=(controls:Form.ContentHorizontalAlignment)}"/>
+		<Setter Property="ContentPadding" Value="{Binding Path=(controls:Form.ContentPadding)}"/>
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="{x:Type controls:FormItem}">
 					<DockPanel Margin="{TemplateBinding Padding}">
-						<Label x:Name="PART_Label" Padding="0" HorizontalAlignment="Left" 
-                               HorizontalContentAlignment="{Binding Path=(controls:FormItem.LabelHorizontalContentAlignment)}" 
-                               VerticalAlignment="{Binding Path=(controls:FormItem.LabelVerticalAlignment)}" 
-                               Margin="{Binding Path=(controls:FormItem.LabelPadding)}" 
-                               DockPanel.Dock="{Binding Path=(controls:FormItem.LabelPosition)}" 
-                               Width="{Binding Path=(controls:FormItem.LabelWidth)}" 
-                               Target="{Binding}" 
-                               Content="{Binding Path=(controls:FormItem.LabelContent)}" 
-                               ContentTemplate="{Binding Path=(controls:FormItem.LabelContentTemplate)}" 
-                               ContentTemplateSelector="{Binding Path=(controls:FormItem.LabelContentTemplateSelector)}" />
-						<ContentPresenter x:Name="PART_Control" 
-                                          HorizontalAlignment="{Binding Path=(controls:FormItem.ContentHorizontalAlignment)}" 
-                                          Margin="{Binding Path=(controls:FormItem.ContentPadding)}" 
-                                          Content="{TemplateBinding Content}" />
+						<Label x:Name="PART_Label"
+							   Padding="0"
+							   Margin="{TemplateBinding LabelPadding}"
+							   HorizontalAlignment="Left"
+							   VerticalAlignment="{TemplateBinding LabelVerticalAlignment}"
+							   HorizontalContentAlignment="{TemplateBinding LabelHorizontalContentAlignment}"
+							   DockPanel.Dock="{TemplateBinding LabelPosition}"
+							   Width="{TemplateBinding LabelWidth}"
+							   Content="{TemplateBinding LabelContent}"
+							   ContentTemplate="{TemplateBinding LabelContentTemplate}"
+							   ContentTemplateSelector="{TemplateBinding LabelContentTemplateSelector}"
+							   Target="{Binding}"/>
+						<ContentPresenter x:Name="PART_Content"
+										  Content="{TemplateBinding Content}"
+										  HorizontalAlignment="{TemplateBinding ContentHorizontalAlignment}"
+										  Margin="{TemplateBinding ContentPadding}"/>
 					</DockPanel>
 					<ControlTemplate.Triggers>
-						<Trigger SourceName="PART_Label" Property="controls:FormItem.LabelPosition" Value="Bottom">
-							<Setter TargetName="PART_Control" Property="DockPanel.Dock" Value="Top" />
+						<Trigger SourceName="PART_Label" Property="DockPanel.Dock" Value="Bottom">
+							<Setter TargetName="PART_Content" Property="DockPanel.Dock" Value="Top" />
 						</Trigger>
-						<Trigger SourceName="PART_Label" Property="controls:FormItem.LabelPosition" Value="Top">
-							<Setter TargetName="PART_Control" Property="DockPanel.Dock" Value="Bottom" />
+						<Trigger SourceName="PART_Label" Property="DockPanel.Dock" Value="Top">
+							<Setter TargetName="PART_Content" Property="DockPanel.Dock" Value="Bottom" />
 						</Trigger>
-						<Trigger SourceName="PART_Label" Property="controls:FormItem.LabelPosition" Value="Right">
-							<Setter TargetName="PART_Control" Property="DockPanel.Dock" Value="Right" />
+						<Trigger SourceName="PART_Label" Property="DockPanel.Dock" Value="Right">
+							<Setter TargetName="PART_Content" Property="DockPanel.Dock" Value="Right" />
 						</Trigger>
 					</ControlTemplate.Triggers>
 				</ControlTemplate>
