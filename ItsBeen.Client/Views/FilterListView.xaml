@@ -14,7 +14,12 @@
 	d:DataContext="{d:DesignData Source=../DesignData/DesignerListViewModel.xaml}">
 	
 	<Grid x:Name="LayoutRoot">
-		<ListBox x:Name="ItemsList" ItemsSource="{Binding Items, Mode=OneWay}" Background="{x:Null}">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="1*"/>
+		</Grid.RowDefinitions>
+		<ContentControl Grid.Row="0" Content="{Binding ListFilterView}" />
+		<ListBox x:Name="ItemsList" Grid.Row="1" ItemsSource="{Binding Items, Mode=OneWay}" Background="{x:Null}">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
 					<views:ItemView/>

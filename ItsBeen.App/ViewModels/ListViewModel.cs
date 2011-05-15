@@ -21,10 +21,11 @@ namespace ItsBeen.App.ViewModels
 		private static readonly string ItemsPropertyName = "Items";
 
 		private readonly IItemService _itemService;
+		private readonly IFilterListBehavior _filterListBehavior;
 		private readonly string _listType;
 
-		private ObservableCollection<ItemViewModel> items;
-		private System.Windows.Threading.DispatcherTimer ticker;
+		private ObservableCollection<ItemViewModel> _items;
+		private System.Windows.Threading.DispatcherTimer _ticker;
 		private ItemViewModel _selectedItem;
 
 		private ICommand commandSelect;
@@ -32,8 +33,10 @@ namespace ItsBeen.App.ViewModels
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ListViewModel"/> class.
 		/// </summary>
-		/// <param name="itemService">An _item service.</param>
-		public ListViewModel(string listType, IItemService itemService)
+		/// <param name="listType">The type of list.</param>
+		/// <param name="itemService">An item service.</param>
+		/// <param name="filterListBehavior">A list filter behavior, or null to not use any filtering.</param>
+		public ListViewModel(string listType, IItemService itemService, IFilterListBehavior filterListBehavior)
 		{
 			if (itemService == null)
 				throw new ArgumentNullException("itemService");
@@ -41,17 +44,20 @@ namespace ItsBeen.App.ViewModels
 			this._itemService = itemService;
 			this._listType = listType;
 
-			// Must initialize ticker BEFORE building _item collection!
-			ticker = new System.Windows.Threading.DispatcherTimer();
-			ticker.Interval = new TimeSpan(TimeSpan.TicksPerSecond); // 1 second interval
-			ticker.Tick += ItemViewModel.HandleTick; // register to static handler
+			if (filterListBehavior != null)
+				this._filterListBehavior = filterListBehavior;
+
+			// Must initialize ticker BEFORE building item collection!
+			_ticker = new System.Windows.Threading.DispatcherTimer();
+			_ticker.Interval = new TimeSpan(TimeSpan.TicksPerSecond); // 1 second interval
+			_ticker.Tick += ItemViewModel.HandleTick; // register to static handler
 
 			BuildItemsCollection();
 
 			RegisterForMessages();
 
 			if (!IsInDesignMode)
-				ticker.Start();
+				_ticker.Start();
 		}
 
 		public string ListType
@@ -59,6 +65,15 @@ namespace ItsBeen.App.ViewModels
 			get
 			{
 				return _listType;
+			}
+		}
+		public object ListFilterView
+		{
+			get
+			{
+				if (_filterListBehavior != null)
+					return _filterListBehavior.View;
+				return null;
 			}
 		}
 		public bool IsItemSelected
@@ -86,11 +101,11 @@ namespace ItsBeen.App.ViewModels
 		{
 			get
 			{
-				return items;
+				return _items;
 			}
 			private set
 			{
-				items = value;
+				_items = value;
 				RaisePropertyChanged(ItemsPropertyName);
 			}
 		}
@@ -121,7 +136,7 @@ namespace ItsBeen.App.ViewModels
 					itemsCol.Add(itemVM);
 				});
 
-			items = itemsCol;
+			_items = itemsCol;
 		}
 		[System.Diagnostics.CodeAnalysis.SuppressMessage(
 			"Microsoft.Reliability",
@@ -134,25 +149,25 @@ namespace ItsBeen.App.ViewModels
 					if (message.Notification == Notifications.NotifyItemAdded)
 					{
 						ItemViewModel newItem = new ItemViewModel(message.Content);
-						items.Add(newItem);
+						_items.Add(newItem);
 					}
 					else if (message.Notification == Notifications.NotifyItemDeleted)
 					{
-						ItemViewModel itemVM = items.Where(i => i.Item.ID == message.Content.ID).FirstOrDefault();
+						ItemViewModel itemVM = _items.Where(i => i.Item.ID == message.Content.ID).FirstOrDefault();
 						if (itemVM != null)
 						{
 							SelectedItem = null;
-							items.Remove(itemVM);
+							_items.Remove(itemVM);
 							itemVM.Cleanup();
 						}
 					}
 					else if (message.Notification == Notifications.NotifyItemSaved)
 					{
-						ItemViewModel itemVM = items.Where(i => i.Item.ID == message.Content.ID).FirstOrDefault();
+						ItemViewModel itemVM = _items.Where(i => i.Item.ID == message.Content.ID).FirstOrDefault();
 						if (itemVM != null)
 						{
 							SelectedItem = null;
-							items[items.IndexOf(itemVM)] = new ItemViewModel(message.Content);
+							_items[_items.IndexOf(itemVM)] = new ItemViewModel(message.Content);
 							itemVM.Cleanup();
 							itemVM = null;
 						}
@@ -173,7 +188,7 @@ namespace ItsBeen.App.ViewModels
 		{
 			base.Cleanup();
 
-			foreach (ItemViewModel item in items)
+			foreach (ItemViewModel item in _items)
 			{
 				item.Cleanup();
 			}
