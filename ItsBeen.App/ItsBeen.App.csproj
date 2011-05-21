@@ -55,7 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppFunqlet.cs" />
-    <Compile Include="IFilterListBehavior.cs" />
+    <Compile Include="IListFilterBehavior.cs" />
     <Compile Include="IRequestCloseViewModel.cs" />
     <Compile Include="Messaging\Commands.cs" />
     <Compile Include="Messaging\Notifications.cs" />

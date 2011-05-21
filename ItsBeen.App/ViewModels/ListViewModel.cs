@@ -21,7 +21,7 @@ namespace ItsBeen.App.ViewModels
 		private static readonly string ItemsPropertyName = "Items";
 
 		private readonly IItemService _itemService;
-		private readonly IFilterListBehavior _filterListBehavior;
+		private readonly IListFilterBehavior _listFilterBehavior;
 		private readonly string _listType;
 
 		private ObservableCollection<ItemViewModel> _items;
@@ -35,17 +35,17 @@ namespace ItsBeen.App.ViewModels
 		/// </summary>
 		/// <param name="listType">The type of list.</param>
 		/// <param name="itemService">An item service.</param>
-		/// <param name="filterListBehavior">A list filter behavior, or null to not use any filtering.</param>
-		public ListViewModel(string listType, IItemService itemService, IFilterListBehavior filterListBehavior)
+		/// <param name="listFilterBehavior">A list filter behavior, or null to not use any filtering.</param>
+		public ListViewModel(string listType, IItemService itemService, IListFilterBehavior listFilterBehavior)
 		{
 			if (itemService == null)
 				throw new ArgumentNullException("itemService");
+			if (listFilterBehavior == null)
+				throw new ArgumentNullException("listFilterBehavior");
 
-			this._itemService = itemService;
 			this._listType = listType;
-
-			if (filterListBehavior != null)
-				this._filterListBehavior = filterListBehavior;
+			this._itemService = itemService;
+			this._listFilterBehavior = listFilterBehavior;
 
 			// Must initialize ticker BEFORE building item collection!
 			_ticker = new System.Windows.Threading.DispatcherTimer();
@@ -71,9 +71,7 @@ namespace ItsBeen.App.ViewModels
 		{
 			get
 			{
-				if (_filterListBehavior != null)
-					return _filterListBehavior.View;
-				return null;
+				return _listFilterBehavior.View;
 			}
 		}
 		public bool IsItemSelected
@@ -137,6 +135,9 @@ namespace ItsBeen.App.ViewModels
 				});
 
 			_items = itemsCol;
+
+			if (_listFilterBehavior != null)
+				_listFilterBehavior.Items = itemsCol;
 		}
 		[System.Diagnostics.CodeAnalysis.SuppressMessage(
 			"Microsoft.Reliability",
