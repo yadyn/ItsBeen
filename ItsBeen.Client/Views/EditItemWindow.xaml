@@ -4,13 +4,15 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:common="clr-namespace:ItsBeen.Client.Common"
 	xmlns:controls="clr-namespace:ItsBeen.Client.Controls"
 	xmlns:sys="clr-namespace:System;assembly=mscorlib"
 	mc:Ignorable="d"
 	d:DataContext="{d:DesignData Source=../DesignData/DesignerEditItemViewModel.xaml}"
 	DataContext="{Binding EditItem, Source={StaticResource Locator}}"
-	Width="300" Height="360"
+	Width="300"
 	ResizeMode="NoResize"
+	SizeToContent="Height"
 	ShowInTaskbar="False"
 	WindowStartupLocation="CenterOwner"
 	Icon="{x:Null}">
@@ -46,6 +48,7 @@
 				</controls:Form.Header>
 				<TextBox controls:Form.LabelContent="_Name" Text="{Binding Name}" MaxLength="{Binding NameMaxLength, Mode=OneWay}"/>
 				<TextBox controls:Form.LabelContent="_Description" Text="{Binding Description}" MaxLength="{Binding DescriptionMaxLength, Mode=OneWay}"/>
+				<ComboBox controls:Form.LabelContent="_Category" Text="{Binding Category}" ItemsSource="{Binding Categories}" IsEditable="True" common:ComboBoxService.MaxLength="{Binding CategoryMaxLength, Mode=OneWay}"/>
 			</controls:Form>
 			<StackPanel x:Name="DetailsPanel" Grid.Row="1">
 				<StackPanel.Resources>
@@ -55,8 +58,8 @@
 				</StackPanel.Resources>
 				<Label Content="_Created"/>
 				<TextBlock Text="{Binding Created, Mode=OneWay}"/>
-				<Label Content="_Last Set"/>
-				<TextBlock Text="{Binding LastUpdated, Mode=OneWay}"/>
+				<Label Content="_Last Reset"/>
+				<TextBlock Text="{Binding LastReset, Mode=OneWay}"/>
 			</StackPanel>
 			<Border Grid.Row="2" Padding="4" BorderBrush="{DynamicResource GrayBrush1}" BorderThickness="0,1,0,0">
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">

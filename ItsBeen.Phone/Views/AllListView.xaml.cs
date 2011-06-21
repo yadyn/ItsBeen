@@ -9,12 +9,12 @@ using Microsoft.Phone.Reactive;
 
 namespace ItsBeen.Phone.Views
 {
-	public partial class DefaultListView : UserControl
+	public partial class AllListView : UserControl
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="DefaultListView"/> class.
+		/// Initializes a new instance of the <see cref="AllListView"/> class.
 		/// </summary>
-		public DefaultListView()
+		public AllListView()
 		{
 			InitializeComponent();
 		}

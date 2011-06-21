@@ -3,36 +3,23 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:common="clr-namespace:ItsBeen.Client.Common"
 	xmlns:views="clr-namespace:ItsBeen.Client.Views"
 	xmlns:i11y="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 	xmlns:gcmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WPF4"
 	mc:Ignorable="d"
-	x:Class="ItsBeen.Client.Views.FilterListView"
+	x:Class="ItsBeen.Client.Views.RecentListView"
 	x:Name="UserControl"
 	d:DesignWidth="400"
 	d:DataContext="{d:DesignData Source=../DesignData/DesignerListViewModel.xaml}">
 
 	<UserControl.Resources>
 		<ResourceDictionary>
-			<CollectionViewSource x:Key="Categories" Source="{Binding Items, Mode=OneWay}">
-				<CollectionViewSource.GroupDescriptions>
-					<PropertyGroupDescription PropertyName="Category"/>
-				</CollectionViewSource.GroupDescriptions>
-			</CollectionViewSource>
-			<common:NullOrEmptyTextConverter x:Key="NullOrEmptyTextConverter"/>
+			<CollectionViewSource x:Key="RecentItems" Source="{Binding Items, Mode=OneWay}" Filter="RecentItems_Filter"/>
 		</ResourceDictionary>
 	</UserControl.Resources>
 
 	<Grid x:Name="LayoutRoot">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="1*"/>
-		</Grid.RowDefinitions>
-		<Border>
-			<ComboBox x:Name="CategoryComboBox" ItemsSource="{Binding Groups, Source={StaticResource Categories}}" HorizontalAlignment="Center" VerticalAlignment="Center" SelectedIndex="0" DisplayMemberPath="Name"/>
-		</Border>
-		<ListBox x:Name="ItemsList" Grid.Row="1" ItemsSource="{Binding SelectedItem.Items, ElementName=CategoryComboBox}" Background="{x:Null}">
+		<ListBox x:Name="ItemsList" ItemsSource="{Binding Source={StaticResource RecentItems}}" Background="{x:Null}">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
 					<views:ItemView/>

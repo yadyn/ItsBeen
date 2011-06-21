@@ -63,6 +63,9 @@
     <Reference Include="Microsoft.Expression.Interactions" />
     <Reference Include="Microsoft.Phone.Controls" />
     <Reference Include="Microsoft.Phone.Controls.Maps" />
+    <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL">
+      <HintPath>..\Assemblies\WP7\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Phone.Reactive" />
     <Reference Include="System.Device" />
     <Reference Include="System.Observable" />
@@ -82,12 +85,12 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Behaviors\GeneralConverters.cs" />
+    <Compile Include="Behaviors\NullOrEmptyTextConverter.cs" />
     <Compile Include="Behaviors\PivotItemConverter.cs" />
     <Compile Include="Behaviors\TimeSinceConverter.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controls\ExtensionMethods.cs" />
     <Compile Include="Controls\FluidListBox.cs" />
-    <Compile Include="Controls\PickerBoxDialog.cs" />
     <Compile Include="Controls\PageBase.cs" />
     <Compile Include="DesignData\DesignerMainViewModel.cs" />
     <Compile Include="MainPage.xaml.cs">
@@ -97,9 +100,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\MessageBoxService.cs" />
     <Compile Include="Services\NavigationService.cs" />
-    <Compile Include="TiltEffect.cs" />
-    <Compile Include="Views\FilterListView.xaml.cs">
-      <DependentUpon>FilterListView.xaml</DependentUpon>
+    <Compile Include="Views\CategoryListView.xaml.cs">
+      <DependentUpon>CategoryListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RecentListView.xaml.cs">
+      <DependentUpon>RecentListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EditItemView.xaml.cs">
       <DependentUpon>EditItemView.xaml</DependentUpon>
@@ -107,8 +112,8 @@
     <Compile Include="Views\ItemView.xaml.cs">
       <DependentUpon>ItemView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DefaultListView.xaml.cs">
-      <DependentUpon>DefaultListView.xaml</DependentUpon>
+    <Compile Include="Views\AllListView.xaml.cs">
+      <DependentUpon>AllListView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -128,6 +133,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </DesignData>
+    <DesignData Include="DesignData\DesignerCategoryListViewModel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </DesignData>
     <Page Include="MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -140,8 +149,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\FilterListView.xaml">
+    <Page Include="Views\CategoryListView.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\RecentListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\EditItemView.xaml">
@@ -152,7 +165,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\DefaultListView.xaml">
+    <Page Include="Views\AllListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -60,15 +60,15 @@ namespace ItsBeen.App.Services
 			items = new List<ItemModel>();
 
 			item = NewItem();
-			item.LastUpdated = DateTime.Now.Add(new TimeSpan(91, 5, 9, 55, 853));
+			item.LastReset = DateTime.Now.Add(new TimeSpan(91, 5, 9, 55, 853));
 			items.Add(item);
 
 			item = NewItem();
-			item.LastUpdated = DateTime.Now.Add(new TimeSpan(0, 15, 42, 12, 585));
+			item.LastReset = DateTime.Now.Add(new TimeSpan(0, 15, 42, 12, 585));
 			items.Add(item);
 
 			item = NewItem();
-			item.LastUpdated = DateTime.Now.Add(new TimeSpan(0, 0, 3, 8, 233));
+			item.LastReset = DateTime.Now.Add(new TimeSpan(0, 0, 3, 8, 233));
 			items.Add(item);
 		}
 	}

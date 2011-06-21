@@ -55,7 +55,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppFunqlet.cs" />
-    <Compile Include="IFilterListBehavior.cs" />
     <Compile Include="IRequestCloseViewModel.cs" />
     <Compile Include="Messaging\Commands.cs" />
     <Compile Include="Messaging\Notifications.cs" />
@@ -72,6 +71,7 @@
     <Compile Include="Services\InMemoryItemService.cs" />
     <Compile Include="Services\IsolatedStorageItemService.cs" />
     <Compile Include="ViewModels\AppViewModel.cs" />
+    <Compile Include="ViewModels\CategoryListViewModel.cs" />
     <Compile Include="ViewModels\EditItemViewModel.cs" />
     <Compile Include="ViewModels\ItemViewModel.cs" />
     <Compile Include="ViewModels\ListViewModel.cs" />

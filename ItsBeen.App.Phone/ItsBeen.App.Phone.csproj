@@ -61,9 +61,6 @@
     <Compile Include="..\ItsBeen.App\AppFunqlet.cs">
       <Link>AppFunqlet.cs</Link>
     </Compile>
-    <Compile Include="..\ItsBeen.App\IFilterListBehavior.cs">
-      <Link>IFilterListBehavior.cs</Link>
-    </Compile>
     <Compile Include="..\ItsBeen.App\IRequestCloseViewModel.cs">
       <Link>IRequestCloseViewModel.cs</Link>
     </Compile>
@@ -94,6 +91,9 @@
     <Compile Include="..\ItsBeen.App\ViewModels\AppViewModel.cs">
       <Link>ViewModels\AppViewModel.cs</Link>
     </Compile>
+    <Compile Include="..\ItsBeen.App\ViewModels\CategoryListViewModel.cs">
+      <Link>ViewModels\CategoryListViewModel.cs</Link>
+    </Compile>
     <Compile Include="..\ItsBeen.App\ViewModels\EditItemViewModel.cs">
       <Link>ViewModels\EditItemViewModel.cs</Link>
     </Compile>
@@ -122,6 +122,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions />

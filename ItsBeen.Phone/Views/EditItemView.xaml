@@ -7,6 +7,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:controls="clr-namespace:ItsBeen.Phone.Controls"
+	xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
 	mc:Ignorable="d"
 	d:DesignWidth="480" d:DesignHeight="768"
 	d:DataContext="{d:DesignData Source=../DesignData/DesignerEditItemViewModel.xaml}"
@@ -37,15 +38,11 @@
 					   Style="{StaticResource PhoneTextTitle1Style}" />
 		</StackPanel>
 		<StackPanel x:Name="ContentPanel" Grid.Row="1">
-			<Grid x:Name="EditGrid">
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-				</Grid.RowDefinitions>
-				<TextBox Text="{Binding Name, Mode=TwoWay}" Grid.ColumnSpan="2" MaxLength="{Binding NameMaxLength, Mode=OneWay}"/>
-				<TextBox Text="{Binding Description, Mode=TwoWay}" Grid.Row="1" Grid.ColumnSpan="2" MaxLength="{Binding DescriptionMaxLength, Mode=OneWay}"/>
-			</Grid>
+			<StackPanel x:Name="EditPanel" Orientation="Vertical">
+				<TextBox Text="{Binding Name, Mode=TwoWay}" MaxLength="{Binding NameMaxLength, Mode=OneWay}"/>
+				<TextBox Text="{Binding Description, Mode=TwoWay}" MaxLength="{Binding DescriptionMaxLength, Mode=OneWay}"/>
+				<toolkit:ListPicker ItemsSource="{Binding Categories}" SelectedItem="{Binding Category, Mode=TwoWay}" Margin="12,4,12,12"/>
+			</StackPanel>
 			<Grid x:Name="DetailsGrid" Margin="12,12,12,0">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="1*"/>
@@ -57,8 +54,8 @@
 				</Grid.RowDefinitions>
 				<TextBlock Text="Created"/>
 				<TextBlock Text="{Binding Created, Mode=OneWay}" Grid.Column="1" Foreground="{StaticResource PhoneSubtleBrush}"/>
-				<TextBlock Text="Last Set" Grid.Row="1"/>
-				<TextBlock Text="{Binding LastUpdated, Mode=OneWay}" Grid.Row="1" Grid.Column="1" Foreground="{StaticResource PhoneSubtleBrush}"/>
+				<TextBlock Text="Last Reset" Grid.Row="1"/>
+				<TextBlock Text="{Binding LastReset, Mode=OneWay}" Grid.Row="1" Grid.Column="1" Foreground="{StaticResource PhoneSubtleBrush}"/>
 			</Grid>
 		</StackPanel>
 	</Grid>

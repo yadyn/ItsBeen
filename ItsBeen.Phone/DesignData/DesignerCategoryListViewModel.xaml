@@ -1,7 +1,13 @@
-﻿<vm:ListViewModel
+﻿<vm:CategoryListViewModel
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:vm="clr-namespace:ItsBeen.App.ViewModels;assembly=ItsBeen.App"
-	xmlns:model="clr-namespace:ItsBeen.App.Model;assembly=ItsBeen.App">
+	xmlns:sys="clr-namespace:System;assembly=mscorlib"
+	xmlns:vm="clr-namespace:ItsBeen.App.ViewModels;assembly=ItsBeen.App.Phone"
+	xmlns:model="clr-namespace:ItsBeen.App.Model;assembly=ItsBeen.App.Phone">
+	<vm:CategoryListViewModel.Categories>
+		<sys:String>Misc</sys:String>
+		<sys:String>Household</sys:String>
+		<sys:String>Personal</sys:String>
+	</vm:CategoryListViewModel.Categories>
 	<vm:ListViewModel.Items>
 		<vm:ItemViewModel
 			Name="Test Item 1"
@@ -27,4 +33,4 @@
 			TimeSince="0:21:33">
 		</vm:ItemViewModel>
 	</vm:ListViewModel.Items>
-</vm:ListViewModel>
+</vm:CategoryListViewModel>

@@ -26,14 +26,14 @@ namespace ItsBeen.Client.DesignData
 			{
 				Control control = null;
 
-				control = new DefaultListView();
-				control.DataContext = new ListViewModel("All", itemService, null);
+				control = new AllListView();
+				control.DataContext = new ListViewModel("All", itemService);
 				this.Add(control);
-				control = new DefaultListView();
-				control.DataContext = new ListViewModel("Recent", itemService, null);
+				control = new RecentListView();
+				control.DataContext = new ListViewModel("Recent", itemService);
 				this.Add(control);
-				control = new FilterListView();
-				control.DataContext = new ListViewModel("Categorized", itemService, null);
+				control = new CategoryListView();
+				control.DataContext = new CategoryListViewModel("Categorized", itemService);
 				this.Add(control);
 			}
 		}

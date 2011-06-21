@@ -1,11 +1,18 @@
 ﻿<vm:EditItemViewModel
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:sys="clr-namespace:System;assembly=mscorlib"
 	xmlns:vm="clr-namespace:ItsBeen.App.ViewModels;assembly=ItsBeen.App"
 	xmlns:model="clr-namespace:ItsBeen.App.Model;assembly=ItsBeen.App"
 	
 	ApplicationName="ItsBeen"
 	Name="Test Item 1"
 	Description="This is a test item."
+	Category="Misc"
 	Created="7/4/2010 10:04:56 AM"
-	LastUpdated="3/30/2011 11:21:09 AM">
+	LastReset="3/30/2011 11:21:09 AM">
+	<vm:EditItemViewModel.Categories>
+		<sys:String>Misc</sys:String>
+		<sys:String>Household</sys:String>
+		<sys:String>Personal</sys:String>
+	</vm:EditItemViewModel.Categories>
 </vm:EditItemViewModel>

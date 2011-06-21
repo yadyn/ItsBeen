@@ -20,9 +20,8 @@ namespace ItsBeen.App.ViewModels
 	{
 		private static readonly string ItemsPropertyName = "Items";
 
-		private readonly IItemService _itemService;
-		private readonly IFilterListBehavior _filterListBehavior;
-		private readonly string _listType;
+		protected readonly IItemService _itemService;
+		protected readonly string _listType;
 
 		private ObservableCollection<ItemViewModel> _items;
 		private System.Windows.Threading.DispatcherTimer _ticker;
@@ -35,17 +34,13 @@ namespace ItsBeen.App.ViewModels
 		/// </summary>
 		/// <param name="listType">The type of list.</param>
 		/// <param name="itemService">An item service.</param>
-		/// <param name="filterListBehavior">A list filter behavior, or null to not use any filtering.</param>
-		public ListViewModel(string listType, IItemService itemService, IFilterListBehavior filterListBehavior)
+		public ListViewModel(string listType, IItemService itemService)
 		{
 			if (itemService == null)
 				throw new ArgumentNullException("itemService");
 
-			this._itemService = itemService;
 			this._listType = listType;
-
-			if (filterListBehavior != null)
-				this._filterListBehavior = filterListBehavior;
+			this._itemService = itemService;
 
 			// Must initialize ticker BEFORE building item collection!
 			_ticker = new System.Windows.Threading.DispatcherTimer();
@@ -65,15 +60,6 @@ namespace ItsBeen.App.ViewModels
 			get
 			{
 				return _listType;
-			}
-		}
-		public object ListFilterView
-		{
-			get
-			{
-				if (_filterListBehavior != null)
-					return _filterListBehavior.View;
-				return null;
 			}
 		}
 		public bool IsItemSelected
@@ -128,15 +114,16 @@ namespace ItsBeen.App.ViewModels
 
 		private void BuildItemsCollection()
 		{
-			ObservableCollection<ItemViewModel> itemsCol = new ObservableCollection<ItemViewModel>();
+			if (_items == null)
+				_items = new ObservableCollection<ItemViewModel>();
+			else
+				_items.Clear();
 
 			_itemService.GetItems().ToList().ForEach(item =>
 				{
 					ItemViewModel itemVM = new ItemViewModel(item);
-					itemsCol.Add(itemVM);
+					_items.Add(itemVM);
 				});
-
-			_items = itemsCol;
 		}
 		[System.Diagnostics.CodeAnalysis.SuppressMessage(
 			"Microsoft.Reliability",

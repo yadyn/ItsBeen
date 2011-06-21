@@ -111,6 +111,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </DesignData>
+    <DesignData Include="DesignData\DesignerCategoryListViewModel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </DesignData>
     <Page Include="Skins\Brushes.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -131,7 +135,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\DefaultListView.xaml">
+    <Page Include="Views\AllListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\RecentListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -139,7 +147,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\FilterListView.xaml">
+    <Page Include="Views\CategoryListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -157,8 +165,11 @@
     </Compile>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="ClientFunqlet.cs" />
+    <Compile Include="Common\ComboBoxService.cs" />
     <Compile Include="Common\GeneralConverters.cs" />
+    <Compile Include="Common\NullOrEmptyTextConverter.cs" />
     <Compile Include="Common\TimeSinceConverter.cs" />
+    <Compile Include="Common\UIChildFinder.cs" />
     <Compile Include="Controls\Form.cs" />
     <Compile Include="Controls\FormItem.cs" />
     <Compile Include="Controls\WindowBase.cs" />
@@ -169,14 +180,17 @@
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\TaskDialogService.cs" />
     <Compile Include="SingleInstance.cs" />
-    <Compile Include="Views\DefaultListView.xaml.cs">
-      <DependentUpon>DefaultListView.xaml</DependentUpon>
+    <Compile Include="Views\AllListView.xaml.cs">
+      <DependentUpon>AllListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RecentListView.xaml.cs">
+      <DependentUpon>RecentListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EditItemWindow.xaml.cs">
       <DependentUpon>EditItemWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\FilterListView.xaml.cs">
-      <DependentUpon>FilterListView.xaml</DependentUpon>
+    <Compile Include="Views\CategoryListView.xaml.cs">
+      <DependentUpon>CategoryListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ItemView.xaml.cs">
       <DependentUpon>ItemView.xaml</DependentUpon>

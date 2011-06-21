@@ -23,14 +23,14 @@ namespace ItsBeen.Phone
 					Control control = null;
 					List<object> listViews = new List<object>();
 
-					control = new DefaultListView();
-					control.DataContext = new ListViewModel("All", c.Resolve<IItemService>(), null);
+					control = new AllListView();
+					control.DataContext = new ListViewModel("All", c.Resolve<IItemService>());
 					listViews.Add(control);
-					control = new DefaultListView();
-					control.DataContext = new ListViewModel("Recent", c.Resolve<IItemService>(), null);
+					control = new RecentListView();
+					control.DataContext = new ListViewModel("Recent", c.Resolve<IItemService>());
 					listViews.Add(control);
-					control = new FilterListView();
-					control.DataContext = new ListViewModel("Categorized", c.Resolve<IItemService>(), null);
+					control = new CategoryListView();
+					control.DataContext = new CategoryListViewModel("Categorized", c.Resolve<IItemService>());
 					listViews.Add(control);
 
 					return listViews;

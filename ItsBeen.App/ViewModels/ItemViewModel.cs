@@ -19,7 +19,7 @@ namespace ItsBeen.App.ViewModels
 	{
 		private static readonly string NamePropertyName = "Name";
 		private static readonly string DescriptionPropertyName = "Description";
-		private static readonly string LastUpdatedPropertyName = "LastUpdated";
+		private static readonly string LastResetPropertyName = "LastReset";
 		private static readonly string CreatedPropertyName = "Created";
 		private static readonly string DueByPropertyName = "DueBy";
 		private static readonly string TimeSincePropertyName = "TimeSince";
@@ -27,8 +27,8 @@ namespace ItsBeen.App.ViewModels
 		private static DateTime tickTime;
 		private static event EventHandler tickEvent;
 
-		private ItemModel item;
-		private TimeSpan timeSince;
+		private ItemModel _item;
+		private TimeSpan _timeSince;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ItemViewModel"/> class.
@@ -38,9 +38,9 @@ namespace ItsBeen.App.ViewModels
 			RegisterForMessages();
 
 			if (IsInDesignMode)
-				this.timeSince = new TimeSpan((TimeSpan.TicksPerDay * 397) + TimeSpan.TicksPerHour + TimeSpan.TicksPerMinute + TimeSpan.TicksPerSecond);
+				this._timeSince = new TimeSpan((TimeSpan.TicksPerDay * 397) + TimeSpan.TicksPerHour + TimeSpan.TicksPerMinute + TimeSpan.TicksPerSecond);
 			else
-				this.timeSince = TimeSpan.Zero;
+				this._timeSince = TimeSpan.Zero;
 
 			ItemViewModel.tickEvent += OnTick;
 		}
@@ -50,7 +50,7 @@ namespace ItsBeen.App.ViewModels
 		/// <param name="_item">The _item model to work with.</param>
 		public ItemViewModel(ItemModel item) : this()
 		{
-			this.item = item;
+			this._item = item;
 			UpdateTimeSince();
 		}
 
@@ -58,18 +58,18 @@ namespace ItsBeen.App.ViewModels
 		{
 			get
 			{
-				return item;
+				return _item;
 			}
 		}
 		public string Name
 		{
 			get
 			{
-				return item == null ? NamePropertyName : item.Name;
+				return _item == null ? NamePropertyName : _item.Name;
 			}
 			set
 			{
-				item.Name = value;
+				_item.Name = value;
 				RaisePropertyChanged(NamePropertyName);
 			}
 		}
@@ -77,45 +77,45 @@ namespace ItsBeen.App.ViewModels
 		{
 			get
 			{
-				return item == null ? DescriptionPropertyName : item.Description;
+				return _item == null ? DescriptionPropertyName : _item.Description;
 			}
 			set
 			{
-				item.Description = value;
+				_item.Description = value;
 				RaisePropertyChanged(DescriptionPropertyName);
 			}
 		}
-		public DateTime LastUpdated
+		public DateTime LastReset
 		{
 			get
 			{
-				if (item == null)
+				if (_item == null)
 				{
 					return (IsInDesignMode) ? DateTime.Now.AddTicks(((TimeSpan.TicksPerDay * 397) + TimeSpan.TicksPerHour + TimeSpan.TicksPerMinute + TimeSpan.TicksPerSecond) * -1) : DateTime.Now;
 				}
 				else
-					return item.LastUpdated;
+					return _item.LastReset;
 			}
 			private set
 			{
-				item.LastUpdated = value;
-				RaisePropertyChanged(LastUpdatedPropertyName);
+				_item.LastReset = value;
+				RaisePropertyChanged(LastResetPropertyName);
 			}
 		}
 		public DateTime Created
 		{
 			get
 			{
-				if (item == null)
+				if (_item == null)
 				{
 					return (IsInDesignMode) ? DateTime.Now.AddTicks(TimeSpan.TicksPerDay * -400) : DateTime.Now;
 				}
 				else
-					return item.Created;
+					return _item.Created;
 			}
 			set
 			{
-				item.Created = value;
+				_item.Created = value;
 				RaisePropertyChanged(CreatedPropertyName);
 			}
 		}
@@ -123,30 +123,31 @@ namespace ItsBeen.App.ViewModels
 		{
 			get
 			{
-				return item.DueBy;
+				return _item.DueBy;
 			}
 		}
 		public TimeSpan TimeSince
 		{
 			get
 			{
-				return timeSince;
+				return _timeSince;
 			}
 			private set
 			{
-				timeSince = value;
+				_timeSince = value;
 				RaisePropertyChanged(TimeSincePropertyName);
 			}
 		}
 
 		public void Reset()
 		{
-			LastUpdated = DateTime.Now;
+			LastReset = DateTime.Now;
+			_item.LastModified = LastReset;
 			RaisePropertyChanged(DueByPropertyName);
 		}
 		public void UpdateTimeSince()
 		{
-			TimeSince = (DateTime.Now - LastUpdated).Duration();
+			TimeSince = (DateTime.Now - LastReset).Duration();
 		}
 
 		/// <summary>

@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Windows.Input;
 
@@ -20,7 +23,8 @@ namespace ItsBeen.App.ViewModels
 		private static readonly string ItemPropertyName = "Item";
 		private static readonly string NamePropertyName = "Name";
 		private static readonly string DescriptionPropertyName = "Description";
-		private static readonly string LastUpdatedPropertyName = "LastUpdated";
+		private static readonly string CategoryPropertyName = "Category";
+		private static readonly string LastResetPropertyName = "LastReset";
 		private static readonly string CreatedPropertyName = "Created";
 
 		private readonly IMessageBoxService _messageBoxService;
@@ -73,16 +77,28 @@ namespace ItsBeen.App.ViewModels
 				RaisePropertyChanged(DescriptionPropertyName);
 			}
 		}
-		public DateTime LastUpdated
+		public string Category
 		{
 			get
 			{
-				return _item.LastUpdated;
+				return _item.Category;
+			}
+			set
+			{
+				_item.Category = value;
+				RaisePropertyChanged(CategoryPropertyName);
+			}
+		}
+		public DateTime LastReset
+		{
+			get
+			{
+				return _item.LastReset;
 			}
 			private set
 			{
-				_item.LastUpdated = value;
-				RaisePropertyChanged(LastUpdatedPropertyName);
+				_item.LastReset = value;
+				RaisePropertyChanged(LastResetPropertyName);
 			}
 		}
 		public DateTime Created
@@ -95,6 +111,18 @@ namespace ItsBeen.App.ViewModels
 			{
 				_item.Created = value;
 				RaisePropertyChanged(CreatedPropertyName);
+			}
+		}
+		public ReadOnlyCollection<string> Categories
+		{
+			get
+			{
+				return _itemService.GetItems()
+					.Select(item => item.Category)
+					.Where(c => !String.IsNullOrEmpty(c))
+					.Distinct()
+					.ToList()
+					.AsReadOnly();
 			}
 		}
 		public int NameMaxLength
@@ -111,6 +139,13 @@ namespace ItsBeen.App.ViewModels
 				return 40;
 			}
 		}
+		public int CategoryMaxLength
+		{
+			get
+			{
+				return 20;
+			}
+		}
 
 		public ICommand CommandSave
 		{
@@ -120,6 +155,7 @@ namespace ItsBeen.App.ViewModels
 				{
 					commandSave = new RelayCommand(() =>
 					{
+						_item.LastModified = DateTime.Now;
 						_itemService.SaveItems();
 						Messenger.Default.Send(new NotificationMessage<ItemModel>(this, _item, Notifications.NotifyItemSaved));
 
@@ -190,7 +226,7 @@ namespace ItsBeen.App.ViewModels
 						RaisePropertyChanged(ItemPropertyName);
 						RaisePropertyChanged(NamePropertyName);
 						RaisePropertyChanged(DescriptionPropertyName);
-						RaisePropertyChanged(LastUpdatedPropertyName);
+						RaisePropertyChanged(LastResetPropertyName);
 						RaisePropertyChanged(CreatedPropertyName);
 					}
 				});

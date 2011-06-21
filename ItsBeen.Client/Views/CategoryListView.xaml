@@ -8,18 +8,14 @@
 	xmlns:i11y="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 	xmlns:gcmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WPF4"
 	mc:Ignorable="d"
-	x:Class="ItsBeen.Client.Views.FilterListView"
+	x:Class="ItsBeen.Client.Views.CategoryListView"
 	x:Name="UserControl"
 	d:DesignWidth="400"
-	d:DataContext="{d:DesignData Source=../DesignData/DesignerListViewModel.xaml}">
+	d:DataContext="{d:DesignData Source=../DesignData/DesignerCategoryListViewModel.xaml}">
 
 	<UserControl.Resources>
 		<ResourceDictionary>
-			<CollectionViewSource x:Key="Categories" Source="{Binding Items, Mode=OneWay}">
-				<CollectionViewSource.GroupDescriptions>
-					<PropertyGroupDescription PropertyName="Category"/>
-				</CollectionViewSource.GroupDescriptions>
-			</CollectionViewSource>
+			<CollectionViewSource x:Key="FilteredItems" Source="{Binding Items, Mode=OneWay}" Filter="FilteredItems_Filter"/>
 			<common:NullOrEmptyTextConverter x:Key="NullOrEmptyTextConverter"/>
 		</ResourceDictionary>
 	</UserControl.Resources>
@@ -30,9 +26,15 @@
 			<RowDefinition Height="1*"/>
 		</Grid.RowDefinitions>
 		<Border>
-			<ComboBox x:Name="CategoryComboBox" ItemsSource="{Binding Groups, Source={StaticResource Categories}}" HorizontalAlignment="Center" VerticalAlignment="Center" SelectedIndex="0" DisplayMemberPath="Name"/>
+			<ComboBox x:Name="CategoryComboBox" ItemsSource="{Binding Categories}" HorizontalAlignment="Center" VerticalAlignment="Center" SelectedIndex="0" Margin="8,4" MinWidth="200">
+				<ComboBox.ItemTemplate>
+					<DataTemplate>
+						<TextBlock Text="{Binding ConverterParameter=[none], Converter={StaticResource NullOrEmptyTextConverter}}"/>
+					</DataTemplate>
+				</ComboBox.ItemTemplate>
+			</ComboBox>
 		</Border>
-		<ListBox x:Name="ItemsList" Grid.Row="1" ItemsSource="{Binding SelectedItem.Items, ElementName=CategoryComboBox}" Background="{x:Null}">
+		<ListBox x:Name="ItemsList" Grid.Row="1" ItemsSource="{Binding Source={StaticResource FilteredItems}}" Background="{x:Null}">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
 					<views:ItemView/>

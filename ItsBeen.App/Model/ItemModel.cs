@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace ItsBeen.App.Model
 {
@@ -9,7 +10,8 @@ namespace ItsBeen.App.Model
 		public string Description { get; set; }
 		public string Category { get; set; }
 		public DateTime Created { get; set; }
-		public DateTime LastUpdated { get; set; }
+		public DateTime LastReset { get; set; }
+		public DateTime LastModified { get; set; }
 		public DateTime? DueBy { get; set; }
 
 		/// <summary>
@@ -17,12 +19,15 @@ namespace ItsBeen.App.Model
 		/// </summary>
 		public ItemModel()
 		{
+			DateTime currentTime = DateTime.Now;
+
 			this.ID = Guid.NewGuid();
 			this.Name = String.Empty;
 			this.Description = String.Empty;
 			this.Category = String.Empty;
-			this.Created = DateTime.Now;
-			this.LastUpdated = DateTime.Now;
+			this.Created = currentTime;
+			this.LastReset = currentTime;
+			this.LastModified = currentTime;
 			this.DueBy = null;
 		}
 		/// <summary>
