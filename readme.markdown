@@ -26,7 +26,7 @@ platforms.
 
 As you may already know, while WP7 utilizes .NET it is a specific flavor, and
 so there are significant differences in the UI and implementation that cannot
-be shared. But a surprising amount of logic can be shared, and the beauty of
+be shared. But a surprising amount of logic *can* be shared, and the beauty of
 the MVVM pattern is that it easily allows this sharing of code.
 
 ## Details ##
@@ -36,12 +36,12 @@ the MVVM pattern is that it easily allows this sharing of code.
 - Uses the [MVVM Light][2] toolkit by Laurent Bugnion
 - WPF client uses my [Cosmopolitan for WPF][3] theme and [Task Dialog][4]
 - Licensed under [Creative Commons BY-NC-SA 3.0][5]
-    - Must attribute
+	- Must attribute
 	- Non-commercial
 	- Share-alike
 
 [1]: http://www.google.com/#hl=en&q=itzbeen
 [2]: http://mvvmlight.codeplex.com/
 [3]: http://github.com/yadyn/Cosmopolitan-Theme-for-WPF
-[4]: http://www.codeproject.com/KB/WPF/WPFTaskDialogEmulator.aspx
+[4]: https://github.com/yadyn/WPF-Task-Dialog
 [5]: http://creativecommons.org/licenses/by-nc-sa/3.0/
