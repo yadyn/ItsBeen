@@ -6,6 +6,7 @@
 	xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:behaviors="clr-namespace:ItsBeen.Phone.Behaviors"
 	xmlns:controls="clr-namespace:ItsBeen.Phone.Controls"
 	xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
 	mc:Ignorable="d"
@@ -19,6 +20,12 @@
 	SupportedOrientations="Portrait"
 	Orientation="Portrait">
 
+	<controls:PageBase.Resources>
+		<ResourceDictionary>
+			<behaviors:ToUpperTextConverter x:Key="ToUpperTextConverter"/>
+		</ResourceDictionary>
+	</controls:PageBase.Resources>
+
 	<Grid x:Name="LayoutRoot"
 		  Background="Transparent">
 		<Grid.RowDefinitions>
@@ -28,13 +35,12 @@
 
 		<StackPanel x:Name="TitlePanel"
 					Grid.Row="0"
-					Margin="24,24,0,12">
+					Margin="12,17,0,12">
 			<TextBlock x:Name="ApplicationTitle"
-					   Text="{Binding ApplicationName}"
+					   Text="{Binding ApplicationName, Converter={StaticResource ToUpperTextConverter}}"
 					   Style="{StaticResource PhoneTextNormalStyle}" />
 			<TextBlock x:Name="PageTitle"
-					   Text="Edit Timer"
-					   Margin="-3,-8,0,0"
+					   Text="edit timer"
 					   Style="{StaticResource PhoneTextTitle1Style}" />
 		</StackPanel>
 		<StackPanel x:Name="ContentPanel" Grid.Row="1">

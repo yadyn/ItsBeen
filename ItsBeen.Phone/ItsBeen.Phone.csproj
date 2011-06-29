@@ -84,6 +84,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Behaviors\TextCaseConverters.cs" />
     <Compile Include="Behaviors\GeneralConverters.cs" />
     <Compile Include="Behaviors\NullOrEmptyTextConverter.cs" />
     <Compile Include="Behaviors\PivotItemConverter.cs" />

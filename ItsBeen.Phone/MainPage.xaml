@@ -23,15 +23,17 @@
 
 	<controls:PageBase.Resources>
 		<ResourceDictionary>
-			 <behaviors:PivotItemConverter x:Key="PivotItemConverter"/>
+			<behaviors:PivotItemConverter x:Key="PivotItemConverter"/>
+			<behaviors:ToUpperTextConverter x:Key="ToUpperTextConverter"/>
+			<behaviors:ToLowerTextConverter x:Key="ToLowerTextConverter"/>
 		</ResourceDictionary>
 	</controls:PageBase.Resources>
 
 	<Grid x:Name="LayoutRoot" Background="Transparent">
-		<phonectrl:Pivot x:Name="PivotMenu" Title="{Binding ApplicationName, Mode=OneWay}" ItemsSource="{Binding ListViews, Converter={StaticResource PivotItemConverter}}" SelectedItem="{Binding ActiveListView, Mode=TwoWay}">
+		<phonectrl:Pivot x:Name="PivotMenu" Title="{Binding ApplicationName, Converter={StaticResource ToUpperTextConverter}, Mode=OneWay}" ItemsSource="{Binding ListViews, Converter={StaticResource PivotItemConverter}}" SelectedItem="{Binding ActiveListView, Mode=TwoWay}">
 			<phonectrl:Pivot.HeaderTemplate>
 				<DataTemplate>
-					<TextBlock Text="{Binding ListType}"/>
+					<TextBlock Text="{Binding ListType, Converter={StaticResource ToLowerTextConverter}}"/>
 				</DataTemplate>
 			</phonectrl:Pivot.HeaderTemplate>
 		</phonectrl:Pivot>
