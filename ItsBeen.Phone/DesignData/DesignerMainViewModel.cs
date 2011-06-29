@@ -26,14 +26,11 @@ namespace ItsBeen.Phone.DesignData
 			{
 				Control control = null;
 
-				control = new AllListView();
-				control.DataContext = new ListViewModel("All", itemService);
+				control = new AllListView(new ListViewModel("All", itemService));
 				this.Add(control);
-				control = new RecentListView();
-				control.DataContext = new ListViewModel("Recent", itemService);
+				control = new RecentListView(new ListViewModel("Recent", itemService));
 				this.Add(control);
-				control = new CategoryListView();
-				control.DataContext = new CategoryListViewModel("Categorized", itemService);
+				control = new CategoryListView(new CategoryListViewModel("Categorized", itemService));
 				this.Add(control);
 			}
 		}

@@ -28,6 +28,22 @@ namespace ItsBeen.Phone.Views
 					}
 				};
 		}
+		/// <summary>
+		/// Initializes a new instance of the <see cref="CategoryListView"/> class.
+		/// </summary>
+		/// <param name="vm">A view model.</param>
+		public CategoryListView(CategoryListViewModel vm)
+			: this()
+		{
+			this.DataContext = vm;
+
+			// Workaround for the CVS Source XAML Binding error
+			// See: http://stackoverflow.com/questions/4643963/
+			CollectionViewSource cvs = Resources["FilteredItems"] as CollectionViewSource;
+
+			if (cvs != null && vm != null)
+				cvs.Source = vm.Items;
+		}
 
 		private void FilteredItems_Filter(object sender, FilterEventArgs e)
 		{

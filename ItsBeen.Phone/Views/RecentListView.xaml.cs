@@ -22,22 +22,29 @@ namespace ItsBeen.Phone.Views
 		public RecentListView()
 		{
 			InitializeComponent();
+		}
+		/// <summary>
+		/// Initializes a new instance of the <see cref="RecentListView"/> class.
+		/// </summary>
+		/// <param name="vm">A view model.</param>
+		public RecentListView(ListViewModel vm)
+			: this()
+		{
+			this.DataContext = vm;
 
-			SetCVSSource();
-
-			ListViewModel vm = DataContext as ListViewModel;
+			SetCVSSource(vm);
 
 			if (vm != null)
 			{
 				vm.PropertyChanged += (s, e) =>
-					{
-						if (e.PropertyName == "Items")
-							SetCVSSource();
-					};
+				{
+					if (e.PropertyName == "Items")
+						SetCVSSource(vm);
+				};
 				vm.Items.CollectionChanged += (s, e) =>
-					{
-						RefreshCVSSource();
-					};
+				{
+					RefreshCVSSource();
+				};
 			}
 		}
 
@@ -51,10 +58,9 @@ namespace ItsBeen.Phone.Views
 				e.Accepted = itemVM.Item.LastModified > DateTime.Now.Subtract(recentTimeSpan);
 		}
 
-		private void SetCVSSource()
+		private void SetCVSSource(ListViewModel vm)
 		{
 			CollectionViewSource cvs = Resources["RecentItems"] as CollectionViewSource;
-			ListViewModel vm = DataContext as ListViewModel;
 
 			if (cvs != null && vm != null)
 				cvs.Source = vm.Items;

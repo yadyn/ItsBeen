@@ -30,7 +30,13 @@
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
 		<Border>
-			<toolkit:ListPicker x:Name="CategoryListPicker" ItemsSource="{Binding Categories}"/>
+			<toolkit:ListPicker x:Name="CategoryListPicker" ItemsSource="{Binding Categories}">
+				<toolkit:ListPicker.ItemTemplate>
+					<DataTemplate>
+						<TextBlock Text="{Binding ConverterParameter=[none], Converter={StaticResource NullOrEmptyTextConverter}}"/>
+					</DataTemplate>
+				</toolkit:ListPicker.ItemTemplate>
+			</toolkit:ListPicker>
 		</Border>
 		<controls:FluidListBox x:Name="ItemsList" Grid.Row="1" ItemsSource="{Binding Source={StaticResource FilteredItems}}" ListAnimationInterval="100">
 			<ListBox.ItemContainerStyle>
