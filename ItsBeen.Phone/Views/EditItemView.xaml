@@ -39,9 +39,12 @@
 		</StackPanel>
 		<StackPanel x:Name="ContentPanel" Grid.Row="1">
 			<StackPanel x:Name="EditPanel" Orientation="Vertical">
+				<TextBlock Text="Name" Foreground="{StaticResource PhoneSubtleBrush}" Margin="12,0"/>
 				<TextBox Text="{Binding Name, Mode=TwoWay}" MaxLength="{Binding NameMaxLength, Mode=OneWay}"/>
+				<TextBlock Text="Description" Foreground="{StaticResource PhoneSubtleBrush}" Margin="12,0"/>
 				<TextBox Text="{Binding Description, Mode=TwoWay}" MaxLength="{Binding DescriptionMaxLength, Mode=OneWay}"/>
-				<toolkit:ListPicker ItemsSource="{Binding Categories}" SelectedItem="{Binding Category, Mode=TwoWay}" Margin="12,4,12,12"/>
+				<TextBlock Text="Category" Foreground="{StaticResource PhoneSubtleBrush}" Margin="12,0"/>
+				<toolkit:AutoCompleteBox Text="{Binding Category, Mode=TwoWay}" ItemsSource="{Binding Categories}" />
 			</StackPanel>
 			<Grid x:Name="DetailsGrid" Margin="12,12,12,0">
 				<Grid.ColumnDefinitions>
@@ -52,10 +55,10 @@
 					<RowDefinition Height="Auto"/>
 					<RowDefinition Height="Auto"/>
 				</Grid.RowDefinitions>
-				<TextBlock Text="Created"/>
-				<TextBlock Text="{Binding Created, Mode=OneWay}" Grid.Column="1" Foreground="{StaticResource PhoneSubtleBrush}"/>
-				<TextBlock Text="Last Reset" Grid.Row="1"/>
-				<TextBlock Text="{Binding LastReset, Mode=OneWay}" Grid.Row="1" Grid.Column="1" Foreground="{StaticResource PhoneSubtleBrush}"/>
+				<TextBlock Text="Created" Foreground="{StaticResource PhoneSubtleBrush}"/>
+				<TextBlock Text="{Binding Created, Mode=OneWay}" Grid.Column="1"/>
+				<TextBlock Text="Last Reset" Foreground="{StaticResource PhoneSubtleBrush}" Grid.Row="1"/>
+				<TextBlock Text="{Binding LastReset, Mode=OneWay}" Grid.Row="1" Grid.Column="1"/>
 			</Grid>
 		</StackPanel>
 	</Grid>
