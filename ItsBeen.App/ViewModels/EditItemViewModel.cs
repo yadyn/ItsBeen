@@ -12,6 +12,7 @@ using GalaSoft.MvvmLight.Messaging;
 using ItsBeen.App.Model;
 using ItsBeen.App.Services;
 using ItsBeen.App.Messaging;
+using TaskDialogInterop;
 
 namespace ItsBeen.App.ViewModels
 {
@@ -28,6 +29,7 @@ namespace ItsBeen.App.ViewModels
 		private static readonly string CreatedPropertyName = "Created";
 
 		private readonly IMessageBoxService _messageBoxService;
+		private readonly ITaskDialogService _taskDialogService;
 		private readonly IItemService _itemService;
 
 		private ItemModel _item;
@@ -40,14 +42,17 @@ namespace ItsBeen.App.ViewModels
 		/// </summary>
 		/// <param name="messageBoxService">A message box service.</param>
 		/// <param name="itemService">An item service.</param>
-		public EditItemViewModel(IMessageBoxService messageBoxService, IItemService itemService)
+		public EditItemViewModel(IMessageBoxService messageBoxService, ITaskDialogService taskDialogService, IItemService itemService)
 		{
 			if (messageBoxService == null)
 				throw new ArgumentNullException("messageBoxService");
+			if (taskDialogService == null)
+				throw new ArgumentNullException("taskDialogService");
 			if (itemService == null)
 				throw new ArgumentNullException("itemService");
 
 			_messageBoxService = messageBoxService;
+			_taskDialogService = taskDialogService;
 			_itemService = itemService;
 
 			RegisterForMessages();
@@ -173,11 +178,14 @@ namespace ItsBeen.App.ViewModels
 				{
 					commandDelete = new RelayCommand(() =>
 					{
-						DialogMessage message = new DialogMessage(this,
-							String.Format(Properties.Resources.ConfirmItemDeleteContent, _item.Name),
-							result =>
+						TaskDialogOptions options = TaskDialogOptions.Default;
+						options.Title = Properties.Resources.ConfirmItemDeleteCaption;
+						options.MainInstruction = String.Format(Properties.Resources.ConfirmItemDeleteContent, _item.Name);
+						options.CommonButtons = TaskDialogCommonButtons.YesNo;
+
+						_taskDialogService.ShowTaskDialog(this, options, tdResult =>
 							{
-								if (result == System.Windows.MessageBoxResult.OK || result == System.Windows.MessageBoxResult.Yes)
+								if (tdResult.Result == TaskDialogSimpleResult.Ok || tdResult.Result == TaskDialogSimpleResult.Yes)
 								{
 									_itemService.DeleteItem(_item);
 									Messenger.Default.Send(new NotificationMessage<ItemModel>(this, _item, Notifications.NotifyItemDeleted));
@@ -185,15 +193,6 @@ namespace ItsBeen.App.ViewModels
 									OnRequestClose(EventArgs.Empty);
 								}
 							});
-						message.Caption = Properties.Resources.ConfirmItemDeleteCaption;
-#if WINDOWS_PHONE
-						message.Button = System.Windows.MessageBoxButton.OKCancel;
-#else
-						message.Button = System.Windows.MessageBoxButton.YesNo;
-						message.DefaultResult = System.Windows.MessageBoxResult.No;
-						message.Icon = System.Windows.MessageBoxImage.Question;
-#endif
-						_messageBoxService.ShowMessageBox(message);
 					});
 				}
 				return commandDelete;

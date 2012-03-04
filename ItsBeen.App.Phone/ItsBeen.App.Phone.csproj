@@ -88,6 +88,9 @@
     <Compile Include="..\ItsBeen.App\Services\IsolatedStorageItemService.cs">
       <Link>Services\IsolatedStorageItemService.cs</Link>
     </Compile>
+    <Compile Include="..\ItsBeen.App\Services\ITaskDialogService.cs">
+      <Link>Services\ITaskDialogService.cs</Link>
+    </Compile>
     <Compile Include="..\ItsBeen.App\ViewModels\AppViewModel.cs">
       <Link>ViewModels\AppViewModel.cs</Link>
     </Compile>
@@ -115,6 +118,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\TaskDialogTypes.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

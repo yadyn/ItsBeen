@@ -75,6 +75,7 @@
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\Assemblies\System.Windows.Interactivity.dll</HintPath>
@@ -176,7 +177,6 @@
     <Compile Include="DesignData\DesignerMainViewModel.cs" />
     <Compile Include="Messaging\TaskDialogMessage.cs" />
     <Compile Include="Services\DialogHelper.cs" />
-    <Compile Include="Services\ITaskDialogService.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\TaskDialogService.cs" />
     <Compile Include="SingleInstance.cs" />

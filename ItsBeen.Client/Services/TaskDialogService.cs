@@ -8,6 +8,7 @@ using GalaSoft.MvvmLight.Messaging;
 
 using TaskDialogInterop;
 
+using ItsBeen.App.Services;
 using ItsBeen.Client.Messaging;
 
 namespace ItsBeen.Client.Services
@@ -15,27 +16,8 @@ namespace ItsBeen.Client.Services
 	/// <summary>
 	/// Service that handles displaying task dialogs.
 	/// </summary>
-	public class TaskDialogService : ITaskDialogService, ItsBeen.App.Services.IMessageBoxService
+	public class TaskDialogService : ITaskDialogService, IMessageBoxService
 	{
-		/// <summary>
-		/// Shows a task dialog.
-		/// </summary>
-		/// <param name="message">
-		/// A <see cref="T:TaskDialogMessage"/> that defines the task dialog.
-		/// </param>
-		public void ShowTaskDialog(TaskDialogMessage message)
-		{
-			TaskDialogOptions options = message.Options;
-
-			if (message.Options.Owner == null)
-			{
-				options.Owner = DialogHelper.TryGetOwnerFromSender(message.Sender);
-			}
-
-			TaskDialogResult result = TaskDialog.Show(options);
-
-			message.ProcessCallback(result);
-		}
 		/// <summary>
 		/// Shows a task dialog.
 		/// </summary>

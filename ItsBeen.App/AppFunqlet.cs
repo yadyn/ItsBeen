@@ -31,6 +31,7 @@ namespace ItsBeen.App
 			container.Register(c =>
 				new EditItemViewModel(
 					c.Resolve<IMessageBoxService>(),
+					c.Resolve<ITaskDialogService>(),
 					c.Resolve<IItemService>()));
 		}
 	}

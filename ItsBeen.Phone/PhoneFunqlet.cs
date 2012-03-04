@@ -16,6 +16,7 @@ namespace ItsBeen.Phone
 		public void Configure(Container container)
 		{
 			container.Register<IMessageBoxService>(c => new MessageBoxService());
+			container.Register<ITaskDialogService>(c => new MessageBoxService());
 			container.Register<INavigationService>(c => new NavigationService());
 
 			container.Register<IEnumerable<object>>("MainListViews", c =>

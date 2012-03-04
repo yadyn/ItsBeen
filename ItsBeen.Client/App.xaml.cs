@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Windows;
 
-using GalaSoft.MvvmLight.Threading;
 using TaskDialogInterop;
+
+using GalaSoft.MvvmLight.Threading;
+
+using ItsBeen.App.Services;
 using ItsBeen.Client.Services;
 
 namespace ItsBeen.Client
