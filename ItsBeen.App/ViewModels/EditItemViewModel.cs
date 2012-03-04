@@ -187,10 +187,7 @@ namespace ItsBeen.App.ViewModels
 							{
 								if (tdResult.Result == TaskDialogSimpleResult.Ok || tdResult.Result == TaskDialogSimpleResult.Yes)
 								{
-									_itemService.DeleteItem(_item);
-									Messenger.Default.Send(new NotificationMessage<ItemModel>(this, _item, Notifications.NotifyItemDeleted));
-
-									OnRequestClose(EventArgs.Empty);
+									DeleteItem();
 								}
 							});
 					});
@@ -214,6 +211,13 @@ namespace ItsBeen.App.ViewModels
 				RequestClose(this, e);
 		}
 
+		private void DeleteItem()
+		{
+			_itemService.DeleteItem(_item);
+			Messenger.Default.Send(new NotificationMessage<ItemModel>(this, _item, Notifications.NotifyItemDeleted));
+
+			OnRequestClose(EventArgs.Empty);
+		}
 		private void RegisterForMessages()
 		{
 			Messenger.Default.Register<NotificationMessage<ItemModel>>(this,
